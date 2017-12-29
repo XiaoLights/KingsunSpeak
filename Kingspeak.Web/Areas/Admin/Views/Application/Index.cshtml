@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLTE.cshtml";
+}
+@section Style{
+<link href="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        接入应用管理
+        <small>管理其他应用接入</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row" id="toolbar">
+        <div class="col-sm-3">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <select id="searchType" style="width:auto;" class="form-control">
+                        <option value="1">应用编号</option>
+                        <option value="2">应用名称</option>
+                        <option value="3">应用秘钥</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" placeholder="请输入查询关键字" id="searchkey" />
+                <div class="input-group-btn">
+                    <button id="btnsearch" class="form-control">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        搜索
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button id="btn_add" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_update" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>修改
+            </button>
+            @*<button id="btn_del" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>*@
+        </div>
+
+    </div>
+    <table id="table" class="table-striped table-hover table-condensed"></table>
+    <div id="addApp" style="display:none;">
+        <form id="addform" style="margin-top:15px;">
+            <input type="hidden" name="ID" id="hidID" value="" />
+            <div class="form-group" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    应用名称
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtappName" name="AppName" class="form-control" placeholder="请输入应用名称" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    应用描述
+                </label>
+                <div class="col-sm-10" style="overflow:hidden;">
+                    <textarea class="form-control" name="AppDescripts" id="txtappDes" rows="3" placeholder="请输入应用描述" style="margin: 0px 138.5px 0px 0px; height: 50px;"></textarea>
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    应用密钥
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtappToken" name="AppToken" class="form-control" placeholder="请输入应用名称" value="" />
+                </div>
+            </div>
+            <div class="form-group date" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    有效期
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control pull-right" name="ExpirDate" id="datepicker">
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- /.content -->
+
+@section scripts{
+    <!-- bootstrap datepicker -->
+
+    <script src="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+    <link href="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.js"></script>
+    <script src="~/Scripts/AdminPage/ApplicationIndex.js"></script>
+}
+

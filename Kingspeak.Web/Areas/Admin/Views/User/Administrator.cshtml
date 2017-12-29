@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Administrator";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLTE.cshtml";
+}
+
+@section Style{
+
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        管理员管理
+        <small>后台用户管理</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row"  id="toolbar">
+        <div class="col-sm-3" >
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <select id="searchType" style="width:auto;" class="form-control">
+                        <option value="1">用户名</option>
+                        <option value="2">真实姓名</option>
+                        <option value="3">用户编号</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" placeholder="请输入查询关键字"  id="searchkey"/>
+                <div class="input-group-btn">
+                    <button id="btn_search" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    搜索</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button id="btn_add" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_del" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+        </div>
+    </div>
+    <table id="table" class="table-striped table-hover table-condensed"></table>
+</section>
+<!-- /.content -->
+
+
+@section scripts{
+    <link href="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.js"></script>
+    <script src="~/Scripts/AdminPage/UserAdministrator.js"></script>
+}

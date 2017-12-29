@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2DE586EB-F547-4505-BD4C-AAB3380E00AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kingspeak.Admin.Service</RootNamespace>
+    <AssemblyName>Kingspeak.Admin.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationService.cs" />
+    <Compile Include="LoginService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kingspeak.Admin.Models\Kingspeak.Admin.Models.csproj">
+      <Project>{469788b5-71f6-42cf-a413-f04f51b1bc6c}</Project>
+      <Name>Kingspeak.Admin.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kingsun.Core.Log4net\Kingsun.Core.Log4net.csproj">
+      <Project>{2992ea03-2b29-43b1-9380-a3f207eed55f}</Project>
+      <Name>Kingsun.Core.Log4net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kingsun.Core.Utils\Kingsun.Core.Utils.csproj">
+      <Project>{38f12367-ba13-42d7-803a-f63ab6c32500}</Project>
+      <Name>Kingsun.Core.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kingsun.Framework.Manager\Kingsun.Framework.Manager.csproj">
+      <Project>{ce768f9b-b080-47ca-8b5a-e3d48a25a2b3}</Project>
+      <Name>Kingsun.Framework.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kingsun.Framework.SqlSugar\Kingsun.Framework.SqlSugar.csproj">
+      <Project>{2dc15499-b3f7-4397-846d-d3bfd2947da5}</Project>
+      <Name>Kingsun.Framework.SqlSugar</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
