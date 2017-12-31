@@ -10,47 +10,47 @@ namespace Kingspeak.Web.Models
         /// <summary>
         /// 接口来源校验
         /// </summary>
-        public string token { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// 用户名称
         /// </summary>
-        public string username { get; set; }
+        public string UserName { get; set; }
         /// <summary>
         /// 手机号 可以是英文
         /// </summary>
-        public string phone { get; set; }
+        public string Phone { get; set; }
         /// <summary>
         /// 1-教师 2-学生
         /// </summary>
-        public int user_type { get; set; }
+        public int UserType { get; set; }
         /// <summary>
         /// 密码
         /// </summary>
-        public string password { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// 真实姓名
         /// </summary>
-        public string realname { get; set; }
+        public string RealName { get; set; }
         /// <summary>
         /// 性别 
         /// </summary>
-        public string sex { get; set; }
+        public string Sex { get; set; }
         /// <summary>
         /// 教师：入职日期 学生：入学时间
         /// </summary>
-        public string addtime { get; set; }
+        public string AddTime { get; set; }
         /// <summary>
         /// 当 user_type = 1 时 (身份)
         /// </summary>
-        public string identity { get; set; }
+        public string Identity { get; set; }
         /// <summary>
         /// 当 user_type = 2 时(年级)
         /// </summary>
-        public string grade { get; set; }
+        public string Grade { get; set; }
         /// <summary>
         /// 来源
         /// </summary>
-        public string channelCode { get; set; }
+        public string ChannelCode { get; set; }
     }
 }

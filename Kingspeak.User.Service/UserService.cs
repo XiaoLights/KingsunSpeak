@@ -92,7 +92,7 @@ namespace Kingspeak.User.Service
                 return null;
             }
             List<Tb_AppToken> atlist = GetList<Tb_AppToken>(it => it.AppToken == appToken);
-            if (atlist == null)
+            if (atlist == null || atlist.Count == 0)
             {
                 return null;
             }
@@ -218,5 +218,65 @@ namespace Kingspeak.User.Service
             }
             return "";
         }
+
+        public YZJResponceClass GetClientResult(string url, FormUrlEncodedContent content)
+        {
+            string result = HttpClientHelper(url, content);
+            if (string.IsNullOrEmpty(result))
+            {
+                return new YZJResponceClass { code = "500", message = "获取信息为空" };
+            }
+            return JsonHelper.DecodeJson<Models.YZJResponceClass>(result);
+        }
+
+        public YZJResponceClass GetLoginToken(string UserName) {
+
+            string url = "http://yzj.kingsun.cn/api/user.php?action=getToken&token=KINGSUN_v7k6WBLPjJQfxUM6";
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>() {
+                    { "username", UserName }
+                });
+            YZJResponceClass result = GetClientResult(url, content);
+
+            return result;
+        }
+
+        public KingResponse GetFreeClass(string stuphone)
+        {
+            Tb_UserInfo uinfo = GetList<Tb_UserInfo>(it => it.TelePhone == stuphone).FirstOrDefault();
+            if (uinfo == null)
+            {
+                return KingResponse.GetErrorResponse("该用户未注册");
+            }
+            Tb_UserFreeCourse ufcinfo = GetList<Tb_UserFreeCourse>(it => it.StuPhone == stuphone).FirstOrDefault();
+            if (ufcinfo == null)
+            {
+                return KingResponse.GetErrorResponse("该用户已领取过课程了，请勿重复操作", 001);
+            }
+            string url = "http://yzj.kingsun.cn/api/user.php?action=signStudentFreeClass&token=KINGSUN_v7k6WBLPjJQfxUM6";
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>() {
+                    { "studentPhone",stuphone }
+                });
+            YZJResponceClass result = GetClientResult(url, content);
+            if (result.code == "200")
+            {
+                ufcinfo = new Tb_UserFreeCourse();
+                ufcinfo.UserID = uinfo.UserId;
+                ufcinfo.StuPhone = stuphone;
+                ufcinfo.CreateDate = DateTime.Now;
+                if (Insert<Tb_UserFreeCourse>(ufcinfo) > 0)
+                {
+                    return KingResponse.GetResponse("领取成功");
+                }
+                else {
+                    return KingResponse.GetErrorResponse("保存领取记录失败");
+                }
+
+            }
+            return KingResponse.GetErrorResponse("领取失败");
+        }
+
+
+
     }
+
 }

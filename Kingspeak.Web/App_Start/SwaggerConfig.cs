@@ -36,7 +36,7 @@ namespace Kingspeak.Web
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
-                        //c.PrettyPrint();
+                        c.PrettyPrint();
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -61,7 +61,7 @@ namespace Kingspeak.Web
                         //c.BasicAuth("basic")
                         //    .Description("Basic HTTP Authentication");
                         //
-						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")
@@ -182,7 +182,7 @@ namespace Kingspeak.Web
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //
-                        //c.DocumentTitle("My Swagger UI");
+                       // c.DocumentTitle(System.Web.HttpContext.Current.Server.UrlEncode("口语教务平台用户接口文档"));
 
                         // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
                         // The file must be included in your project as an "Embedded Resource", and then the resource's
@@ -216,7 +216,7 @@ namespace Kingspeak.Web
 
                         // Specify which HTTP operations will have the 'Try it out!' option. An empty paramter list disables
                         // it for all operations.
-                        //
+                        // 控制页面上是否有 调试按钮的开关
                         //c.SupportedSubmitMethods("GET", "HEAD");
 
                         // Use the CustomAsset option to provide your own version of assets used in the swagger-ui.
@@ -248,10 +248,11 @@ namespace Kingspeak.Web
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"
                         //
-                        //c.EnableApiKeySupport("apiKey", "header");
+                        c.EnableApiKeySupport("apiKey", "header");
                     });
         }
-        static string GetXmlCommentsPath() {
+        static string GetXmlCommentsPath()
+        {
 
             var re = System.String.Format(@"{0}\bin\Swagger.XML", System.AppDomain.CurrentDomain.BaseDirectory);
             return re;

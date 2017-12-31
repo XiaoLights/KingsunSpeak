@@ -149,6 +149,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetStuList.cs" />
+    <Compile Include="Models\GetUserToken.cs" />
+    <Compile Include="Models\StuGetFreeClass.cs" />
     <Compile Include="Models\Userinfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

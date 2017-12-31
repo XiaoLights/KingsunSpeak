@@ -674,6 +674,12 @@ namespace Kingsun.Core.Utils
             Byte[] data = Encrypt(encoder.GetBytes(Target), encoder.GetBytes("1234567890abcdef"));
             return System.Convert.ToBase64String(data);
         }
+        public static string Encrypt(string Target,string key)
+        {
+            System.Text.Encoding encoder = System.Text.Encoding.UTF8;
+            Byte[] data = Encrypt(encoder.GetBytes(Target), encoder.GetBytes(key));
+            return System.Convert.ToBase64String(data);
+        }
         /// <summary>
         /// 解密
         /// </summary>
@@ -684,6 +690,12 @@ namespace Kingsun.Core.Utils
             System.Text.Encoding encoder = System.Text.Encoding.UTF8;
             return encoder.GetString(Decrypt(System.Convert.FromBase64String(Target), encoder.GetBytes("1234567890abcdef")));
         }
+        public static string Decrypt(string Target, string key)
+        {
+            System.Text.Encoding encoder = System.Text.Encoding.UTF8;
+            return encoder.GetString(Decrypt(System.Convert.FromBase64String(Target), encoder.GetBytes(key)));
+        }
+
         #endregion
     }
 }
