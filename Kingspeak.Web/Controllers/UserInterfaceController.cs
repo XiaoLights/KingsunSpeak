@@ -138,6 +138,7 @@ namespace Kingspeak.Web.Controllers
         [HttpPost]
         public KingResponse GetSomething(string str)
         {
+            Kingsun.Core.Log4net.Log.Info("测试日志", "日志内容：" + str);
             return KingResponse.GetResponse(str);
         }
     }

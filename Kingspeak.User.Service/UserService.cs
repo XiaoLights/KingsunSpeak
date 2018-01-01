@@ -26,7 +26,7 @@ namespace Kingspeak.User.Service
             {
                 return KingResponse.GetErrorResponse(yzjresult.message);
             }
-            YZJResponseUserInfo yzjuinfo = JsonHelper.DecodeJson<YZJResponseUserInfo>(yzjresult.data);
+            YZJResponseUserInfo yzjuinfo = JsonHelper.DecodeJson<YZJResponseUserInfo>(yzjresult.data.ToString());
             UUMSUserService.User uumsuinfo = SyncUUMSUserInfo(userinfo);
             if (uumsuinfo == null)
             {
@@ -221,15 +221,25 @@ namespace Kingspeak.User.Service
 
         public YZJResponceClass GetClientResult(string url, FormUrlEncodedContent content)
         {
-            string result = HttpClientHelper(url, content);
-            if (string.IsNullOrEmpty(result))
+            try
             {
-                return new YZJResponceClass { code = "500", message = "获取信息为空" };
+                string result = HttpClientHelper(url, content);
+                if (string.IsNullOrEmpty(result))
+                {
+                    return new YZJResponceClass { code = "500", message = "获取信息为空" };
+                }
+                Kingsun.Core.Log4net.Log.Info("获取易助教请求结果", result);
+                return JsonHelper.DecodeJson<Models.YZJResponceClass>(result);
             }
-            return JsonHelper.DecodeJson<Models.YZJResponceClass>(result);
+            catch (Exception ex)
+            {
+                Kingsun.Core.Log4net.Log.Error("获取易助教请求结果错误", ex);
+                return new YZJResponceClass { code = "500", message = "获取信息错误!" + ex.Message };
+            }
         }
 
-        public YZJResponceClass GetLoginToken(string UserName) {
+        public YZJResponceClass GetLoginToken(string UserName)
+        {
 
             string url = "http://yzj.kingsun.cn/api/user.php?action=getToken&token=KINGSUN_v7k6WBLPjJQfxUM6";
             var content = new FormUrlEncodedContent(new Dictionary<string, string>() {
@@ -248,7 +258,7 @@ namespace Kingspeak.User.Service
                 return KingResponse.GetErrorResponse("该用户未注册");
             }
             Tb_UserFreeCourse ufcinfo = GetList<Tb_UserFreeCourse>(it => it.StuPhone == stuphone).FirstOrDefault();
-            if (ufcinfo == null)
+            if (ufcinfo != null)
             {
                 return KingResponse.GetErrorResponse("该用户已领取过课程了，请勿重复操作", 001);
             }

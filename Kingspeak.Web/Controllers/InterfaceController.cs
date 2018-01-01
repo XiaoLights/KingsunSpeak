@@ -135,7 +135,7 @@ namespace Kingspeak.Web.Controllers
 
                 YZJResponceClass result = service.GetLoginToken(userinfo.UserName);
                 string url = System.Configuration.ConfigurationManager.AppSettings.Get("LoginToUrl");
-                string str = result.data.Substring(result.data.LastIndexOf("af_token:"));
+                string str = result.data.ToString().Substring(result.data.ToString().LastIndexOf("af_token:"));
                 str = str.Replace("af_token:", "").Replace("}", "").Replace("]", "");
                 url = url + str;
                 return Json(KingResponse.GetResponse(url));
