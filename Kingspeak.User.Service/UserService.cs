@@ -246,7 +246,12 @@ namespace Kingspeak.User.Service
                     { "username", UserName }
                 });
             YZJResponceClass result = GetClientResult(url, content);
+            object[] arr = (object[])result.data;
 
+            if (arr.Length <= 0)
+            {
+                return new YZJResponceClass { code = "500", data = "", message = "获取Token失败" };
+            }
             return result;
         }
 

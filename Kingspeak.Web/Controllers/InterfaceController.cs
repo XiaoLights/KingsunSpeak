@@ -134,11 +134,17 @@ namespace Kingspeak.Web.Controllers
                 }
 
                 YZJResponceClass result = service.GetLoginToken(userinfo.UserName);
-                string url = System.Configuration.ConfigurationManager.AppSettings.Get("LoginToUrl");
-                string str = result.data.ToString().Substring(result.data.ToString().LastIndexOf("af_token:"));
-                str = str.Replace("af_token:", "").Replace("}", "").Replace("]", "");
-                url = url + str;
-                return Json(KingResponse.GetResponse(url));
+                if (result.code == "200")
+                {
+                    string url = System.Configuration.ConfigurationManager.AppSettings.Get("LoginToUrl");
+                    string str = result.data.ToString().Substring(result.data.ToString().LastIndexOf("af_token:"));
+                    str = str.Replace("af_token:", "").Replace("}", "").Replace("]", "");
+                    url = url + str;
+                    return Json(KingResponse.GetResponse(url));
+                }
+                else {
+                    return Json(KingResponse.GetErrorResponse(result.message));
+                }
             }
             catch (Exception ex)
             {
