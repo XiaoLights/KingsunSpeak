@@ -28,6 +28,12 @@ namespace Kingspeak.Web.Controllers
             return View();
         }
 
+        public ActionResult XZJTY()
+        {
+            InitCookie();
+            return View();
+        }
+
         private void InitCookie()
         {
             string param = Request.Form["username"];
@@ -107,7 +113,7 @@ namespace Kingspeak.Web.Controllers
             }
 
             KingResponse res = service.CheckAppToken(token);
-            
+
             return res.Success;
         }
 
@@ -139,7 +145,8 @@ namespace Kingspeak.Web.Controllers
                     url = url + str;
                     return Json(KingResponse.GetResponse(url));
                 }
-                else {
+                else
+                {
                     return Json(KingResponse.GetErrorResponse(result.message));
                 }
             }

@@ -30,4 +30,20 @@ namespace Kingspeak.User.Models
         public string utype { get; set; }
         public string utypecn { get; set; }
     }
+
+    public class ImportUserExcelModel {
+        public string UserName { get; set; }
+        public DateTime? ListenDate { get; set; }
+        public DateTime? SignupDate { get; set; }
+        public decimal? SignupMoney { get; set; }
+        public int? ClassAdviser { get; set; }
+        public string RealName { get; set; }
+        public string TelePhone { get; set; }
+        public string Grade { get; set; }
+        public int? ResourceID { get; set; }
+        public string Resource { get; set; }
+        public bool? Success { get; set; }
+
+        public string ErrorMsg { get; set; }
+    }
 }

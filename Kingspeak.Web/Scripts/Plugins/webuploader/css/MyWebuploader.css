@@ -1,0 +1,11 @@
+﻿.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background: #3c8dbc;
+    padding:0;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}

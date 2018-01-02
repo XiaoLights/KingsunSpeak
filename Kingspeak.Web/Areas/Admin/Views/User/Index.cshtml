@@ -5,7 +5,10 @@
 }
 
 @section Style{
-<link href="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/Scripts/Plugins/webuploader/css/webuploader.css" rel="stylesheet" />
+<link href="~/Scripts/Plugins/webuploader/css/MyWebuploader.css" rel="stylesheet" />
 }
 }
 <!-- Content Header (Page header) -->
@@ -63,8 +66,8 @@
             <button id="btn_export" type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
             </button>
-            <button id="btn_import" type="button" class="btn btn-primary">
-                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>导入
+            <button id="btn_import" class="btn btn-primary" style=" padding-bottom: 1px;">
+               <span class="glyphicon glyphicon-import" aria-hidden="true"></span>导入
             </button>
             <button id="btn_import_model" type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>下载导入模板
@@ -84,7 +87,7 @@
                     用户名
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" id="txtuserName" name="UserName" class="form-control" placeholder="用户名" value="" />
+                    <input type="text" id="txtuserName" name="UserName" class="form-control required" placeholder="用户名" value="" />
                     <input type="hidden" id="hidUserId" value="" />
                 </div>
             </div>
@@ -126,7 +129,6 @@
                 </label>
                 <div class="col-sm-10">
                     <select class="form-control" name="ResourceID" id="selres">
-                        <option value="0">来源筛选</option>
                         @{
                             if (ViewBag.AppList != null)
                             {
@@ -170,7 +172,7 @@
                 </label>
                 <div class="col-sm-10">
                     <input type="text" id="txtun" name="UserName" class="form-control" readonly="readonly" placeholder="用户名" value="" />
-                    <input type="hidden" id="hidfcid" name="ID"  value=""/>
+                    <input type="hidden" id="hidfcid" name="ID" value="" />
                 </div>
             </div>
             <div class="form-group" style="overflow:hidden;">
@@ -209,7 +211,7 @@
                             {
                                 foreach (var a in ViewBag.AdviserList)
                                 {
-                                    <option value="@a.ID">@a.AdviserName</option>
+                        <option value="@a.ID">@a.AdviserName</option>
                                 }
                             }
                         }
@@ -218,13 +220,16 @@
             </div>
         </form>
     </div>
+
+
 </section>
 <!-- /.content -->
 
 @section scripts{
     <!--日期选择-->
     <script src="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-
+    <!--上传控件-->
+    <script src="~/Scripts/Plugins/webuploader/dist/webuploader.js"></script>
     <link href="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
     <script src="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.js"></script>
     <script src="~/Scripts/AdminPage/UserIndex.js"></script>

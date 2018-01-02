@@ -13,6 +13,9 @@
             clearBtn: true,//清除按钮
             autoclose: true
         })
+
+        Current.Validata();
+        Current.InitUploadBtn();
     }
 
     this.InitTable = function () {
@@ -86,14 +89,16 @@
             }, {
                 field: 'Status',
                 title: '状态'
-                , formatter: function (value) {
+                , formatter: function (value,row) {
                     var html = '';
                     if (value == "1") {
+                        var param = "'" + row.UserId + "','2'";
                         // html += '<input type="checkbox" class="switch switch-small" checked data-on-text="正常" data-off-text="禁用"/>  ';
-                        html += '<span class="label label-success">启用</span>';
+                        html += '<a href="javascript:void(0)" title="领取课程" onclick="userIndex.ChangeState(' + param + ')"><span class="label label-success">启用</span></a>';
                     }
                     else {
-                        html += '<span class="label label-danger">禁用</span>';
+                        var param = "'" + row.UserId + "','1'";
+                        html += '<a href="javascript:void(0)" title="领取课程" onclick="userIndex.ChangeState(' + param + ')"><span class="label label-danger">禁用</span></a>';
                     }
                     return html;
                 }
@@ -182,7 +187,7 @@
 
     this.BtnClick = function () {
         $("#btn_export").click(function () {
-            var param = { limit: 1, offset: 2 };
+            var params = { limit: 1, offset: 2 };
             var obj = Current.GetParams(params);
             var $form = $('<form target="down-file-iframe" method="post" />');
             $form.attr('action', "/Admin/User/ExportUser");
@@ -200,6 +205,23 @@
         $("#btn_adduser").click(function () {
             Current.OpenDialog();
         })
+
+        $("#btn_deluser").click(function () {
+            Current.DeleteUser();
+        })
+    }
+
+    this.ChangeState = function (userid,state) {
+        var obj = { UserID: userid, State: state };
+        $.post("/Admin/User/ChangeState", obj, function (data) {
+            if (data.Success) {
+                layer.msg("操作成功", { time: 1000 });
+                $('#table').bootstrapTable("refresh");
+            } else {
+                layer.alert(data.ErrorMsg);
+
+            }
+        })
     }
 
     this.SaveUser = function () {
@@ -213,6 +235,39 @@
 
             }
         })
+    }
+
+    this.DeleteUser = function () {
+        layer.confirm('确认要删除选中用户吗？', {
+            title: '确认',
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            var arr = $('#table').bootstrapTable('getSelections');
+            if (arr.length < 1) {
+                layer.msg("请选择一条记录", { time: 1000 });
+                return;
+            }
+            var idarr = '';
+            for (var i = 0; i < arr.length; i++) {
+                if (idarr.length != 0) {
+                    idarr += ',';
+                }
+                idarr += arr[i].UserId;
+            }
+            var obj = { UserIDs: idarr };
+            $.post('/Admin/User/DeleteUser', obj, function (data) {
+                if (data.Success) {
+                    layer.alert("删除成功", { time: 1000 });
+                    $('#table').bootstrapTable("refresh");
+                }
+                else {
+                    layer.msg(data.ErrorMsg);
+                }
+            })
+
+        }, function () {
+
+        });
     }
 
     this.OpenDialog = function () {
@@ -274,6 +329,56 @@
             })
         }, function () {
 
+        });
+    }
+
+    this.InitUploadBtn = function () {
+        var uploader = WebUploader.create({
+            auto: true,
+            // swf文件路径
+            swf: '/Scripts/Plugins/webuploader/dist/Uploader.swf',
+            // 文件接收服务端。
+            server: '/Admin/User/UploadUser',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: {
+                id: '#btn_import',
+                multiple: false
+            },
+            fileNumLimit: 1,
+            // 只允许选择excel表格文件。
+            accept: {
+                title: 'Applications',
+                extensions: 'xls,xlsx',
+                mimeTypes: 'application/xls,application/xlsx'
+            },
+            uploadSuccess: function (file, response) {
+
+            }
+        });
+    }
+
+    this.Validata = function () {
+        $("#addform").validate({
+            rules: {
+                txtuserName: "required",
+                txttrueName: {
+                    required: true
+                },
+                txttele: {
+                    required: true
+                } 
+            },
+            messages: {
+                txtuserName: "请输入用户名",
+                txttrueName: {
+                    required: "请输入真实姓名"                    
+                },
+                txttele: {
+                    required: "请输入手机号"                     
+                }
+               
+            }
         });
     }
 }

@@ -12,6 +12,7 @@ namespace Kingspeak.User.Models
         /// <summary>
         /// 编号
         /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int? UserId { get; set; }
 
         /// <summary>
