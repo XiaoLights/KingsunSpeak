@@ -106,12 +106,9 @@ namespace Kingspeak.Web.Controllers
                 return false;
             }
 
-            Tb_AppToken atinfo = service.CheckAppToken(token);
-            if (atinfo != null)
-            {
-                return true;
-            }
-            return false;
+            KingResponse res = service.CheckAppToken(token);
+            
+            return res.Success;
         }
 
         public JsonResult GoToClass()

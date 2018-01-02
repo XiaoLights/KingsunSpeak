@@ -85,18 +85,29 @@ namespace Kingspeak.User.Service
 
         }
 
-        public Tb_AppToken CheckAppToken(string appToken)
+        public KingResponse CheckAppToken(string appToken)
         {
             if (string.IsNullOrEmpty(appToken))
             {
-                return null;
+                return KingResponse.GetErrorResponse("秘钥为空");
             }
             List<Tb_AppToken> atlist = GetList<Tb_AppToken>(it => it.AppToken == appToken);
             if (atlist == null || atlist.Count == 0)
             {
                 return null;
             }
-            return atlist[0];
+            if (atlist[0].State != 1)
+            {
+                return KingResponse.GetErrorResponse("秘钥已禁用");
+            }
+            if (atlist[0].ExpirDate.HasValue && atlist[0].ExpirDate < DateTime.Now)
+            {
+                return KingResponse.GetErrorResponse("秘钥已过期");
+            }
+            else
+            {
+                return KingResponse.GetResponse(atlist[0]);
+            }
         }
 
         public YZJResponceClass SyncYZJUserInfo(Tb_UserInfo userinfo)
@@ -282,7 +293,8 @@ namespace Kingspeak.User.Service
                 {
                     return KingResponse.GetResponse("领取成功");
                 }
-                else {
+                else
+                {
                     return KingResponse.GetErrorResponse("保存领取记录失败");
                 }
 

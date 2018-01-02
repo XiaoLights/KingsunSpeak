@@ -13,6 +13,7 @@
             striped: true,                      //是否显示行间隔色
             pagination: true,                   //是否显示分页（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            clickToSelect: true,
             queryParams: Current.GetParams,//传递参数（*）
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 20, 30],            //可供选择的每页的行数（*）
@@ -28,7 +29,7 @@
                  , sortable: true
             }, {
                 field: 'TrueName',
-                title: '来源'
+                title: '真实姓名'
             }, {
                 field: 'AcatarImg',
                 title: '头像'
@@ -70,11 +71,86 @@
     }
 
     this.BtnClick = function () {
-        
+
 
         $("#btn_search").click(function () {
             $('#table').bootstrapTable('selectPage', 1);
         })
+
+        $("#btn_add").click(function () {
+            Current.ClearDialog();
+            Current.OpenDialog();
+        })
+
+        $("#btn_del").click(function () {
+            Current.DeleteAdminUser();
+        })
+    }
+
+    this.OpenDialog = function () {
+        layer.open({
+            title: '添加管理员用户',
+            type: 1,
+            area: ['600px', '360px'],//大小设置
+            fixed: false, //不固定
+            btn: ['保存', '放弃'],
+            content: $('#addAdmin'),
+            btn1: function () {
+                //按钮1的回掉（保存按钮)
+                Current.SaveAdminUser();
+            }
+        });
+
+    }
+
+    this.ClearDialog = function () {
+
+    }
+
+    this.SaveAdminUser = function () {
+        $.post("/Admin/User/SaveAdminUser", $("#addform").serialize(), function (data) {
+            if (data.Success) {
+                layer.alert("保存成功", { time: 1000 });
+                layer.closeAll('page');
+                $('#table').bootstrapTable("refresh");
+            } else {
+                layer.alert(data.ErrorMsg);
+
+            }
+        })
+    }
+
+    this.DeleteAdminUser = function () {
+        layer.confirm('确认要删除选中用户吗？', {
+            title: '确认',
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            var arr = $('#table').bootstrapTable('getSelections');
+            if (arr.length < 1) {
+                layer.msg("请选择一条记录", { time: 1000 });
+                return;
+            }
+            var idarr = '';
+            for (var i = 0; i < arr.length; i++) {
+                if (idarr.length != 0) {
+                    idarr += ',';
+                }
+                idarr += arr[i].UserID;
+            }
+            var obj = { UserIDs: idarr };
+            $.post('/Admin/User/DeleteAdminUser', obj, function (data) {
+                if (data.Success) {
+                    layer.alert("删除成功", { time: 1000 });
+                    $('#table').bootstrapTable("refresh");
+                }
+                else {
+                    layer.msg(data.ErrorMsg);
+                }
+            })
+
+        }, function () {
+
+        });
     }
 }
 $(function () {
