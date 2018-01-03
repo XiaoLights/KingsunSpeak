@@ -7,7 +7,7 @@
 
     this.InitTable = function () {
         $('#table').bootstrapTable({
-            url: '/Admin/User/GetAdminList',                           //请求后台的URL（*）
+            url:Common.GetRightUrl( '/Admin/User/GetAdminList'),                           //请求后台的URL（*）
             method: 'post',                     //请求方式（*）
             toolbar: '#toolbar',                   //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -108,7 +108,7 @@
     }
 
     this.SaveAdminUser = function () {
-        $.post("/Admin/User/SaveAdminUser", $("#addform").serialize(), function (data) {
+        $.post(Common.GetRightUrl("/Admin/User/SaveAdminUser"), $("#addform").serialize(), function (data) {
             if (data.Success) {
                 layer.alert("保存成功", { time: 1000 });
                 layer.closeAll('page');
@@ -138,7 +138,7 @@
                 idarr += arr[i].UserID;
             }
             var obj = { UserIDs: idarr };
-            $.post('/Admin/User/DeleteAdminUser', obj, function (data) {
+            $.post(Common.GetRightUrl('/Admin/User/DeleteAdminUser'), obj, function (data) {
                 if (data.Success) {
                     layer.alert("删除成功", { time: 1000 });
                     $('#table').bootstrapTable("refresh");

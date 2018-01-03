@@ -20,13 +20,15 @@
 
     this.InitTable = function () {
         $('#table').bootstrapTable({
-            url: '/Admin/User/GetUserList',                           //请求后台的URL（*）
+            url: Common.GetRightUrl('/Admin/User/GetUserList'),                  //请求后台的URL（*）
             method: 'post',                     //请求方式（*）
             toolbar: '#toolbar',                   //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             pagination: true,                   //是否显示分页（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             clickToSelect: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
             queryParams: Current.GetParams,//传递参数（*）
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 20, 30],            //可供选择的每页的行数（*）
@@ -49,6 +51,7 @@
                 field: 'UserId',
                 title: '用户编号'
                 , sortable: true
+                , visible: false
             }, {
                 field: 'UserName',
                 title: '用户名称'
@@ -62,9 +65,11 @@
             }, {
                 field: 'Grade',
                 title: '年级'
+                , visible:false
             }, {
                 field: 'UserType',
                 title: '用户类型'
+                , visible: false
                  , formatter: function (value) {
                      var html = '';
                      if (value == "1") {
@@ -78,12 +83,14 @@
             }, {
                 field: 'Sex',
                 title: '性别'
+                 , visible: false
             }, {
                 field: 'Resource',
                 title: '来源'
             }, {
                 field: 'CreateTime',
                 title: '创建时间'
+                 , visible: false
                 , sortable: true
                 , formatter: function (value) { return Common.FormatTime(value); }
             }, {
@@ -191,7 +198,7 @@
             var params = { limit: 1, offset: 2 };
             var obj = Current.GetParams(params);
             var $form = $('<form target="down-file-iframe" method="post" />');
-            $form.attr('action', "/Admin/User/ExportUser");
+            $form.attr('action',Common.GetRightUrl( "/Admin/User/ExportUser"));
             for (var key in obj) {
                 $form.append('<input type="hidden" name="' + key + '" value="' + obj[key] + '" />');
             }
@@ -213,7 +220,7 @@
 
         $("#btn_import_model").click(function () {
             var $form = $('<form target="down-file-iframe" method="get" />');
-            $form.attr('action', "/Content/ExcelModel/导入用户模板.xlsx");
+            $form.attr('action', Common.GetRightUrl("/Content/ExcelModel/导入用户模板.xlsx"));
             $(document.body).append($form);
             $form.submit();
             $form.remove();
@@ -222,7 +229,7 @@
 
     this.ChangeState = function (userid, state) {
         var obj = { UserID: userid, State: state };
-        $.post("/Admin/User/ChangeState", obj, function (data) {
+        $.post(Common.GetRightUrl("/Admin/User/ChangeState"), obj, function (data) {
             if (data.Success) {
                 layer.msg("操作成功", { time: 1000 });
                 $('#table').bootstrapTable("refresh");
@@ -234,7 +241,7 @@
     }
 
     this.SaveUser = function () {
-        $.post("/Admin/User/SaveUser", $("#addform").serialize(), function (data) {
+        $.post(Common.GetRightUrl("/Admin/User/SaveUser"), $("#addform").serialize(), function (data) {
             if (data.Success) {
                 layer.alert("保存成功", { time: 1000 });
                 layer.closeAll('page');
@@ -264,7 +271,7 @@
                 idarr += arr[i].UserId;
             }
             var obj = { UserIDs: idarr };
-            $.post('/Admin/User/DeleteUser', obj, function (data) {
+            $.post(Common.GetRightUrl('/Admin/User/DeleteUser'), obj, function (data) {
                 if (data.Success) {
                     layer.alert("删除成功", { time: 1000 });
                     $('#table').bootstrapTable("refresh");
@@ -321,7 +328,7 @@
     }
 
     this.SaveClassInfo = function () {
-        $.post("/Admin/User/SaveEditClassInfo", $("#editclassform").serialize(), function (data) {
+        $.post(Common.GetRightUrl("/Admin/User/SaveEditClassInfo"), $("#editclassform").serialize(), function (data) {
             if (data.Success) {
                 layer.alert("保存成功", { time: 1000 });
                 layer.closeAll('page');
@@ -339,7 +346,7 @@
             btn: ['确定', '取消'] //按钮
         }, function () {
             var obj = { UserID: userid };
-            $.post("/Admin/User/GetFreeClass", obj, function (data) {
+            $.post(Common.GetRightUrl("/Admin/User/GetFreeClass"), obj, function (data) {
                 if (data.Success) {
                     layer.msg("获取成功", { time: 1000 });
                     $('#table').bootstrapTable("refresh");
@@ -356,9 +363,9 @@
         var uploader = WebUploader.create({
             auto: true,
             // swf文件路径
-            swf: '/Scripts/Plugins/webuploader/dist/Uploader.swf',
+            swf: Common.GetRightUrl('/Scripts/Plugins/webuploader/dist/Uploader.swf'),
             // 文件接收服务端。
-            server: '/Admin/User/UploadUser',
+            server: Common.GetRightUrl('/Admin/User/UploadUser'),
             // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
             pick: {

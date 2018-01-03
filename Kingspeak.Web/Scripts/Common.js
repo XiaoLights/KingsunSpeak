@@ -19,6 +19,11 @@ Common.QueryString = {
 }
 Common.QueryString.Initial();
 
+Common.GetRightUrl = function (url) {
+    var cont = "";
+    cont = "/Kingspeak";
+    return cont + url;
+}
 
 Common.FormatTime = function (time, format) {
     if (!time) {

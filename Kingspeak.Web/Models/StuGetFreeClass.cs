@@ -12,8 +12,8 @@ namespace Kingspeak.Web.Models
         /// </summary>
         public string Token { get; set; }
         /// <summary>
-        /// 学生手机号码
+        /// 学生用户名或者手机号
         /// </summary>
-        public string StuPhone { get; set; }
+        public string StuUserName { get; set; }
     }
 }

@@ -39,7 +39,6 @@ namespace Kingspeak.User.Service
                 _userinfo = new Tb_UserInfo();
                 _userinfo.UserName = userinfo.UserName;
                 _userinfo.Resource = userinfo.Resource;
-                _userinfo.Resource = userinfo.Resource;
                 _userinfo.ResourceID = userinfo.ResourceID;
                 _userinfo.UserIdMod = uumsuinfo.UserID;
                 _userinfo.CreateTime = DateTime.Now;
@@ -302,8 +301,102 @@ namespace Kingspeak.User.Service
             return KingResponse.GetErrorResponse("领取失败");
         }
 
+        public ImportUserExcelModel InsertIntoDB(ImportUserExcelModel model)
+        {
+            if (model.Success.HasValue && model.Success.Value)
+            {
+                Tb_UserInfo uinfo = GetList<Tb_UserInfo>(it => it.UserName == model.UserName || it.TelePhone == model.TelePhone).FirstOrDefault();
+                if (uinfo == null)
+                {
+                    uinfo = new Tb_UserInfo();
+                    uinfo.UserName = model.UserName;
+                    uinfo.TelePhone = model.TelePhone;
+                    uinfo.Grade = model.Grade;
+                    uinfo.Password = StringHelper.GetMD5("123456");
+                    uinfo.RealName = model.RealName;
+                    uinfo.ResourceID = model.ResourceID;
+                    uinfo.Resource = model.Resource;
+                    uinfo.Status = 1;
+                    if (Insert<Tb_UserInfo>(uinfo) > 0)
+                    {
+                        uinfo = GetList<Tb_UserInfo>(it => it.UserName == model.UserName).FirstOrDefault();
+                        SyncYZJUserInfo(uinfo);
+                        SyncUUMSUserInfo(uinfo);
+                    }
+                    else
+                    {
+                        model.Success = false;
+                        model.ErrorMsg = "插入新用户失败";
+                        return model;
+                    }
+                }
 
+                Tb_UserFreeCourse cinfo = GetList<Tb_UserFreeCourse>(it => it.UserID == uinfo.UserId).FirstOrDefault();
+                if (cinfo == null)
+                {
+                    cinfo = new Tb_UserFreeCourse();
+                    cinfo.UserID = uinfo.UserId;
+                    cinfo.CreateDate = DateTime.Now;
+                    cinfo.StuPhone = uinfo.TelePhone;
+                    cinfo.ListenDate = model.ListenDate;
+                    cinfo.SignupDate = model.SignupDate;
+                    cinfo.SignupMoney = model.SignupMoney;
+                    cinfo.ClassAdviser = model.ClassAdviser;
+                    if (Insert<Tb_UserFreeCourse>(cinfo) > 0)
+                    {
+                        model.Success = true;
+                        return model;
+                    }
+                    else
+                    {
+                        model.Success = false;
+                        model.ErrorMsg = "插入课程记录失败";
+                        return model;
+                    }
+                }
+                else
+                {
+                    cinfo.ListenDate = model.ListenDate;
+                    cinfo.SignupDate = model.SignupDate;
+                    cinfo.SignupMoney = model.SignupMoney;
+                    cinfo.ClassAdviser = model.ClassAdviser;
+                    if (Update<Tb_UserFreeCourse>(cinfo))
+                    {
+                        model.Success = true;
+                        return model;
+                    }
+                    else
+                    {
+                        model.Success = false;
+                        model.ErrorMsg = "更新课程记录失败";
+                        return model;
+                    }
+                }
+            }
+            else
+            {
+                return model;
+            }
+        }
 
+        public KingResponse GetStuInfo(string username)
+        {
+            V_UserInfo uinfo = GetList<V_UserInfo>(it => it.UserName == username && it.Status == 1 && it.UserType == 2).FirstOrDefault();
+            if (uinfo == null)
+            {
+                return KingResponse.GetErrorResponse("找不到用户信息");
+            }
+            return KingResponse.GetResponse(new
+            {
+                UserID = uinfo.UserId,
+                UserName = uinfo.UserName,
+                ApplyDate = uinfo.GetClassDate,
+                ListenDate = uinfo.ListenDate,
+                SignupDate = uinfo.SignupDate,
+                SignupMoney = uinfo.SignupMoney,
+                AdviserName = uinfo.AdviserName
+            });
+        }
     }
 
 }

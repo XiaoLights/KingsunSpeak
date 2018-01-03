@@ -142,8 +142,6 @@ namespace Kingspeak.AdminController
             ViewBag.AdviserList = GetAdviserList();
             return View();
         }
-
-
         public JsonResult GetUserList(int pageindex, int pagesize, string sortName, string sortOrder, string SearchKey, int? SearchType, int? Source)
         {
             PageParams<V_UserInfo> param = new PageParams<V_UserInfo>();
@@ -194,7 +192,7 @@ namespace Kingspeak.AdminController
 
         public JsonResult SaveUser([FromBody]Tb_UserInfo uinfo)
         {
-            AdminUserService service = new AdminUserService();
+            UserService service = new UserService();
             Tb_UserInfo userinfo = new Tb_UserInfo();
             if (uinfo.UserId.HasValue)
             {
@@ -250,13 +248,14 @@ namespace Kingspeak.AdminController
                 userinfo.TelePhone = uinfo.TelePhone;
                 userinfo.Password = StringHelper.GetMD5("123456");
                 userinfo.Status = 1;
-                if (service.Insert<Tb_UserInfo>(userinfo) > 0)
+                KingResponse res = service.SyncUserInfo(userinfo);
+                if (res.Success)
                 {
                     return Json(KingResponse.GetResponse("新增成功"));
                 }
                 else
                 {
-                    return Json(KingResponse.GetErrorResponse("新增失败"));
+                    return Json(res);
                 }
             }
 
@@ -449,7 +448,7 @@ namespace Kingspeak.AdminController
                 if (cellstr != "用户名称" && cellstr != "LucyTest")
                 {
                     ImportUserExcelModel model = GetModelInfo(row, AdviserList, applist);
-                    model = InsertIntoDB(model, service);
+                    model = service.InsertIntoDB(model);
                     resultList.Add(model);
                     Kingsun.Core.Log4net.Log.Info("导入日志", string.Format("导入-->用户名：{0}  ##  结果：{1}  ##  信息：{2}   ", model.UserName, model.Success.ToString(), model.ErrorMsg));
                 }
@@ -498,7 +497,6 @@ namespace Kingspeak.AdminController
             }
             catch (Exception ex)
             {
-
                 return new ImportUserExcelModel
                 {
                     Success = true,
@@ -507,81 +505,6 @@ namespace Kingspeak.AdminController
             }
         }
 
-        private ImportUserExcelModel InsertIntoDB(ImportUserExcelModel model, UserService service)
-        {
-            if (model.Success.HasValue && model.Success.Value)
-            {
-                Tb_UserInfo uinfo = service.GetList<Tb_UserInfo>(it => it.UserName == model.UserName || it.TelePhone == model.TelePhone).FirstOrDefault();
-                if (uinfo == null)
-                {
-                    uinfo = new Tb_UserInfo();
-                    uinfo.UserName = model.UserName;
-                    uinfo.TelePhone = model.TelePhone;
-                    uinfo.Grade = model.Grade;
-                    uinfo.Password = StringHelper.GetMD5("123456");
-                    uinfo.RealName = model.RealName;
-                    uinfo.ResourceID = model.ResourceID;
-                    uinfo.Resource = model.Resource;
-                    uinfo.Status = 1;
-                    if (service.Insert<Tb_UserInfo>(uinfo) > 0)
-                    {
-                        uinfo = service.GetList<Tb_UserInfo>(it => it.UserName == model.UserName).FirstOrDefault();
-                    }
-                    else
-                    {
-                        model.Success = false;
-                        model.ErrorMsg = "插入新用户失败";
-                        return model;
-                    }
-                }
-
-                Tb_UserFreeCourse cinfo = service.GetList<Tb_UserFreeCourse>(it => it.UserID == uinfo.UserId).FirstOrDefault();
-                if (cinfo == null)
-                {
-                    cinfo = new Tb_UserFreeCourse();
-                    cinfo.UserID = uinfo.UserId;
-                    cinfo.CreateDate = DateTime.Now;
-                    cinfo.StuPhone = uinfo.TelePhone;
-                    cinfo.ListenDate = model.ListenDate;
-                    cinfo.SignupDate = model.SignupDate;
-                    cinfo.SignupMoney = model.SignupMoney;
-                    cinfo.ClassAdviser = model.ClassAdviser;
-                    if (service.Insert<Tb_UserFreeCourse>(cinfo) > 0)
-                    {
-                        model.Success = true;
-                        return model;
-                    }
-                    else
-                    {
-                        model.Success = false;
-                        model.ErrorMsg = "插入课程记录失败";
-                        return model;
-                    }
-                }
-                else
-                {
-                    cinfo.ListenDate = model.ListenDate;
-                    cinfo.SignupDate = model.SignupDate;
-                    cinfo.SignupMoney = model.SignupMoney;
-                    cinfo.ClassAdviser = model.ClassAdviser;
-                    if (service.Update<Tb_UserFreeCourse>(cinfo))
-                    {
-                        model.Success = true;
-                        return model;
-                    }
-                    else
-                    {
-                        model.Success = false;
-                        model.ErrorMsg = "更新课程记录失败";
-                        return model;
-                    }
-                }
-            }
-            else
-            {
-                return model;
-            }
-        }
 
         private List<Tb_AppToken> GetAppTokenList()
         {

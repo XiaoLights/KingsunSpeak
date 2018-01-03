@@ -12,7 +12,7 @@
 
     this.InitTable = function () {
         $('#table').bootstrapTable({
-            url: '/Admin/Application/GetAppTokenList',                           //请求后台的URL（*）
+            url: Common.GetRightUrl('/Admin/Application/GetAppTokenList'),                           //请求后台的URL（*）
             method: 'post',                     //请求方式（*）
             toolbar: '#toolbar',                   //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -99,7 +99,7 @@
 
     this.ChangeState = function (id, state) {
         var obj = { ID: id, State: state };
-        $.post("/Admin/Application/ChangeState", obj, function (data) {
+        $.post(Common.GetRightUrl("/Admin/Application/ChangeState"), obj, function (data) {
             if (data.Success) {
                 layer.msg((state == "1" ? "启用" : "禁用") + "成功");
                 $('#table').bootstrapTable("refresh");
@@ -111,7 +111,7 @@
     }
 
     this.SaveApp = function () {
-        $.post("/Admin/Application/SaveApp", $("#addform").serialize(), function (data) {
+        $.post(Common.GetRightUrl("/Admin/Application/SaveApp"), $("#addform").serialize(), function (data) {
             if (data.Success) {
                 layer.alert("保存成功", { time: 1000 });
                 layer.closeAll('page');

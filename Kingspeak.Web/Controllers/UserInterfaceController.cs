@@ -67,7 +67,7 @@ namespace Kingspeak.Web.Controllers
             {
                 return res;
             }
-            KingResponse kres = service.GetFreeClass(stu.StuPhone);
+            KingResponse kres = service.GetFreeClass(stu.StuUserName);
             return kres;
         }
 
@@ -132,7 +132,23 @@ namespace Kingspeak.Web.Controllers
             }
         }
 
-
+        /// <summary>
+        /// 获取学生的信息
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public KingResponse GetStuInfo([FromBody]StuGetFreeClass stu)
+        {
+            UserService service = new UserService();
+            KingResponse res = service.CheckAppToken(stu.Token);
+            if (!res.Success)
+            {
+                return res;
+            }
+            KingResponse kres = service.GetStuInfo(stu.StuUserName);
+            return kres;
+        }
 
         /// <summary>
         /// 测试

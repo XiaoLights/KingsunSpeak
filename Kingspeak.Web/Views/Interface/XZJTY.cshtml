@@ -13,20 +13,23 @@
     <link href="@Url.Content("~/Content/css/base.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script src="~/Scripts/Plugins/layer/layer/layer.js"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/Page/index.js")"></script>
+
 </head>
 <body>
     <!-- 头部 -->
     <div class="header">
         <div class="w">
             <div class="head_nr clearfix">
-                <div class="down fr" style="position:relative">
-                    <h2>金太阳英语外教</h2>
+                <div class="down fr" style="position:relative; top:0; right:-90px;">
+                    <img src="~/Content/images/LOGO.png" />
+                    <h2>金太阳英语在线教育</h2>
                     <h3>定制专属外教口语课</h3>
                     <h3>轻松有趣学英语</h3>
                     <div id="btnmask" style="position: absolute;height: 160px;width: 200px;z-index: 9999;top: 280px;left: -5px; display:none;"></div>
-                    <a class="a1" href="#" id="gotoclass">马上去上课</a>
-                    <a class="order" href="#" id="getclass">领取体验课</a>
+                    <a class="a1" href="javascript:void(0)" id="gotoclass">马上去上课</a>
+                    <a class="order" href="javascript:void(0)" id="getclass">领取体验课</a>
                 </div>
             </div>
         </div>
@@ -70,6 +73,7 @@
                         100%来自欧美国家，严格甄选入住资质层层考核，拥有丰富的教学经验
                     </p>
                     <p class="p2">	中美名师任你选，让孩子在家享受优质的英文教学，像Kitty一样自由交谈。</p>
+                    <img src="~/Content/images/LOGO1.png" style="margin:40px 0;"/>
                     <a href="#" onclick="javascript: $('#gotoclass').click();">参与体验</a>
                 </div>
                 <div class="videos_nr">
@@ -80,7 +84,7 @@
                     </video>
                     <ul>
                         <li>课堂实录</li>
-                        <li class="on">我的外教</li>
+                        <li class="on">我们的外教</li>
                     </ul>
                 </div>
                 <div class="kuai"></div>
@@ -154,25 +158,25 @@
     <!-- 页面底部开始 -->
     <div class="footer">
         <div class="w code clearfix">
-            <div style="margin:0 auto; overflow:hidden; width:1000px;">
+            <div style="  overflow:hidden;  ">
                 <div class="divc">
-                    <img src="@Url.Content("~/Content/images/code.png")" alt="">
+                    <img src="@Url.Content("~/Content/images/code.png")" style=" width:170px; height:170px;" alt="">
                     <p>官方微信</p>
                 </div>
                 <div class="divc">
-                    <img src="@Url.Content("~/Content/images/code.png")" alt="">
+                    <img src="@Url.Content("~/Content/images/kcgw.jpg")" style=" width:170px; height:170px;" alt="">
                     <p>课程顾问</p>
                 </div>
                 @*<img src="@Url.Content("~/Content/images/code.png")" alt="">
             <img src="@Url.Content("~/Content/images/code.png")" alt="">*@
-                <div class="divc">
+                <div class="divc" style="text-align:left;">
                     <h2>客服热线</h2>
                     <p>0755-66892256</p>
                     <p>0755-86336023</p>
                 </div>
-                <div class="divc" style="margin-right:0;">
+                <div class="divc" style="margin-right:0;text-align:left;">
                     <h2>客服QQ</h2>
-                    <p>13705419731</p>                   
+                    <p>1370541973</p>                   
                 </div>
             </div>
         </div>
@@ -199,5 +203,6 @@
     <div style="display: none">
         <script src="https://s19.cnzz.com/z_stat.php?id=1263421333&web_id=1263421333" language="JavaScript"></script>
     </div>
+    <input type="hidden" id="loginResult" value="@ViewBag.Result" />
 </body>
 </html>
