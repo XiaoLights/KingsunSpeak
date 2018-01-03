@@ -10,7 +10,7 @@
     <link href="~/Scripts/Plugins/webuploader/css/webuploader.css" rel="stylesheet" />
 <link href="~/Scripts/Plugins/webuploader/css/MyWebuploader.css" rel="stylesheet" />
 }
-}
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -27,6 +27,8 @@
                     <select id="searchType" style="width:auto;" class="form-control">
                         <option value="1">用户名</option>
                         <option value="2">真实姓名</option>
+                        <option value="3">用户编号</option>
+                        <option value="4">手机号</option>
                     </select>
                 </div>
                 <input type="text" class="form-control" placeholder="请输入查询关键字" id="searchkey" />
@@ -81,14 +83,13 @@
 
     <div id="addUser" style="display:none;">
         <form id="addform" style="margin-top:15px;">
-            <input type="hidden" name="ID" id="hidID" value="" />
             <div class="form-group" style="overflow:hidden;">
                 <label for="txtappName" class="col-sm-2 control-label txtlabel">
                     用户名
                 </label>
                 <div class="col-sm-10">
                     <input type="text" id="txtuserName" name="UserName" class="form-control required" placeholder="用户名" value="" />
-                    <input type="hidden" id="hidUserId" value="" />
+                    <input type="hidden" name="UserId" id="hidUserId" value="" />
                 </div>
             </div>
             <div class="form-group" style="overflow:hidden;">

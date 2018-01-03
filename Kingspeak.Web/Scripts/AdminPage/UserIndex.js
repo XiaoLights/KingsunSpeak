@@ -89,7 +89,7 @@
             }, {
                 field: 'Status',
                 title: '状态'
-                , formatter: function (value,row) {
+                , formatter: function (value, row) {
                     var html = '';
                     if (value == "1") {
                         var param = "'" + row.UserId + "','2'";
@@ -155,7 +155,8 @@
                  , events: operateEvents
                   // formatter: operateFormatter
                   , formatter: function (value, row) {
-                      return ['<button type="button" class="EditClass btn btn-default  btn-sm" style="margin-right:15px;">修改</button>'
+                      return ['<button type="button" class="EditClass btn btn-default  btn-sm" style="margin-right:15px;">编辑课程</button>'
+                          , '<button type="button" class="EditUinfo btn btn-default  btn-sm" style="margin-right:15px;">修改用户</button>'
                       ].join('');
                       //var html = '';
                       //var param = "'" + row.UserId + "'";
@@ -209,9 +210,17 @@
         $("#btn_deluser").click(function () {
             Current.DeleteUser();
         })
+
+        $("#btn_import_model").click(function () {
+            var $form = $('<form target="down-file-iframe" method="get" />');
+            $form.attr('action', "/Content/ExcelModel/导入用户模板.xlsx");
+            $(document.body).append($form);
+            $form.submit();
+            $form.remove();
+        })
     }
 
-    this.ChangeState = function (userid,state) {
+    this.ChangeState = function (userid, state) {
         var obj = { UserID: userid, State: state };
         $.post("/Admin/User/ChangeState", obj, function (data) {
             if (data.Success) {
@@ -270,9 +279,20 @@
         });
     }
 
-    this.OpenDialog = function () {
+    this.OpenDialog = function (title) {
+        if (!title) {
+            title = "添加用户";
+        }
+        $("#hidUserId").val("");
+        $("#txtuserName").val("");
+        $("#txttrueName").val("");
+        $("#txttele").val("");
+        $("#selgrade").val("");
+        $("#selres").val("");
+        $("#selsex").val("");
+
         layer.open({
-            title: '添加用户',
+            title: title,
             type: 1,
             area: ['600px', '450px'],//大小设置
             fixed: false, //不固定
@@ -351,9 +371,24 @@
                 title: 'Applications',
                 extensions: 'xls,xlsx',
                 mimeTypes: 'application/xls,application/xlsx'
-            },
-            uploadSuccess: function (file, response) {
-
+            }
+        });
+        uploader.on('uploadSuccess', function (file, response) {
+            if (response.Success) {
+                var success = 0;
+                if (response.Data) {
+                    for (var i = 0; i < response.Data.length; i++) {
+                        if (response.Data[i].Success) {
+                            success++;
+                        }
+                    }
+                }
+                layer.alert("上传 " + response.Data.length + " 条用户记录，成功 " + success + " 条用户记录 ");
+                $('#table').bootstrapTable("refresh");
+                 
+            }
+            else {
+                layer.alert(response.ErrorMsg);
             }
         });
     }
@@ -367,17 +402,17 @@
                 },
                 txttele: {
                     required: true
-                } 
+                }
             },
             messages: {
                 txtuserName: "请输入用户名",
                 txttrueName: {
-                    required: "请输入真实姓名"                    
+                    required: "请输入真实姓名"
                 },
                 txttele: {
-                    required: "请输入手机号"                     
+                    required: "请输入手机号"
                 }
-               
+
             }
         });
     }
@@ -403,6 +438,15 @@ window.operateEvents = {
         } else {
             layer.alert("请先领取课程", { time: 1000 });
         }
-
+    },
+    'click .EditUinfo': function (e, value, row, index) {
+        userIndex.OpenDialog("修改用户");
+        $("#hidUserId").val(row.UserId);
+        $("#txtuserName").val(row.UserName);
+        $("#txttrueName").val(row.RealName);
+        $("#txttele").val(row.TelePhone);
+        $("#selgrade").val(row.Grade);
+        $("#selres").val(row.ResourceID);
+        $("#selsex").val(row.Sex);
     }
 }

@@ -293,9 +293,28 @@
 	background-color: #fff;
 }
 .footer .code img{
-	float: left;
-	margin-right: 20px;
+	/*float: left;*/
+	/*margin-right: 20px;*/
 }
+.footer .code .divc{
+	float:left;
+    margin-right:40px;   
+    height:220px; 
+    width:220px;
+    text-align:center;
+}
+.footer .code .divc h2{
+    margin:40px 0 20px;
+	font-size:26px;
+    color:#000;
+}
+.footer .code .divc label{
+     display:block;
+	 width:100%;
+     line-height:24px;
+     text-align:center;
+}
+ 
 .footer .code p{
 	font:500 18px/30px "微软雅黑";
 	color: #72767F;

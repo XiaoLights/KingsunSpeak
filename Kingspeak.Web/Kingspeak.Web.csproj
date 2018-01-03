@@ -6817,6 +6817,9 @@
     <Content Include="Content\images\peo1.png" />
     <Content Include="Content\images\peo2.png" />
     <Content Include="Content\images\peo3.png" />
+    <Content Include="Content\images\peo4.png" />
+    <Content Include="Content\images\peo5.png" />
+    <Content Include="Content\images\peo6.png" />
     <Content Include="Content\images\pic1.png" />
     <Content Include="Content\images\pic2.png" />
     <Content Include="Content\images\pic3.png" />
@@ -7453,6 +7456,7 @@
     <Content Include="Content\AdminLTE\bower_components\bootstrap-table\locale\README.md" />
     <Content Include="Areas\Admin\Views\Application\Index.cshtml" />
     <Content Include="log4net.config" />
+    <Content Include="Content\ExcelModel\导入用户模板.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

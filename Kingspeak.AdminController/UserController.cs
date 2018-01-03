@@ -180,6 +180,9 @@ namespace Kingspeak.AdminController
                     case 3:
                         where.Add(it => it.UserId.ToString() == SearchKey);
                         break;
+                    case 4:
+                        where.Add(it => it.TelePhone.Contains(SearchKey));
+                        break;
                 }
             }
             if (Source.HasValue && Source.Value != 0)
@@ -207,7 +210,13 @@ namespace Kingspeak.AdminController
                 }
                 userinfo.UserName = uinfo.UserName;
                 userinfo.RealName = uinfo.RealName;
-                userinfo.Resource = uinfo.Resource;
+                Tb_AppToken info = service.Get<Tb_AppToken>(uinfo.ResourceID);
+                if (info == null)
+                {
+                    return Json(KingResponse.GetErrorResponse("来源信息找不到"));
+                }
+                userinfo.ResourceID = info.ID;
+                userinfo.Resource = info.AppName;
                 userinfo.Grade = uinfo.Grade;
                 userinfo.Sex = uinfo.Sex;
                 userinfo.TelePhone = uinfo.TelePhone;
@@ -229,7 +238,13 @@ namespace Kingspeak.AdminController
                 }
                 userinfo.UserName = uinfo.UserName;
                 userinfo.RealName = uinfo.RealName;
-                userinfo.Resource = uinfo.Resource;
+                Tb_AppToken info = service.Get<Tb_AppToken>(uinfo.ResourceID);
+                if (info == null)
+                {
+                    return Json(KingResponse.GetErrorResponse("来源信息找不到"));
+                }
+                userinfo.ResourceID = info.ID;
+                userinfo.Resource = info.AppName;
                 userinfo.Grade = uinfo.Grade;
                 userinfo.Sex = uinfo.Sex;
                 userinfo.TelePhone = uinfo.TelePhone;
@@ -361,18 +376,20 @@ namespace Kingspeak.AdminController
             //给 sheet 添加第一行的头部标题         
             headerrow.CreateCell(0).SetCellValue("用户编号");
             headerrow.CreateCell(1).SetCellValue("用户名称");
-            headerrow.CreateCell(2).SetCellValue("来源");
-            headerrow.CreateCell(3).SetCellValue("创建时间");
-            headerrow.CreateCell(4).SetCellValue("MOD用户编号");
+            headerrow.CreateCell(2).SetCellValue("联系方式");
+            headerrow.CreateCell(3).SetCellValue("真实姓名");
+            headerrow.CreateCell(4).SetCellValue("年级");
             headerrow.CreateCell(5).SetCellValue("用户类型");
-            headerrow.CreateCell(6).SetCellValue("真实姓名");
-            headerrow.CreateCell(7).SetCellValue("性别");
-            headerrow.CreateCell(8).SetCellValue("添加时间");
-            headerrow.CreateCell(9).SetCellValue("年级");
-            headerrow.CreateCell(10).SetCellValue("状态");
-            headerrow.CreateCell(11).SetCellValue("来源系统用户编号");
-
-
+            headerrow.CreateCell(6).SetCellValue("性别");
+            headerrow.CreateCell(7).SetCellValue("来源");
+            headerrow.CreateCell(8).SetCellValue("创建时间");
+            headerrow.CreateCell(9).SetCellValue("状态");
+            headerrow.CreateCell(10).SetCellValue("是否已领取课程");
+            headerrow.CreateCell(11).SetCellValue("领取课程时间");
+            headerrow.CreateCell(12).SetCellValue("试听时间");
+            headerrow.CreateCell(13).SetCellValue("报名时间");
+            headerrow.CreateCell(14).SetCellValue("报名费用");
+            headerrow.CreateCell(15).SetCellValue("课程顾问");
 
             for (int i = startIndex; i < endIndex; i++)
             {
@@ -384,17 +401,20 @@ namespace Kingspeak.AdminController
                     cell.CellStyle = style;                 //设置单元格格式
                     row.CreateCell(0).SetCellValue(toinfo.UserId.Value);
                     row.CreateCell(1).SetCellValue(toinfo.UserName);
-                    row.CreateCell(2).SetCellValue(toinfo.Resource);
-                    row.CreateCell(3).SetCellValue(toinfo.CreateTime.Value.ToString("yyyy-MM-dd HH:mm:ss"));
-                    row.CreateCell(4).SetCellValue(toinfo.UserIdMod);
+                    row.CreateCell(2).SetCellValue(toinfo.TelePhone);
+                    row.CreateCell(3).SetCellValue(toinfo.RealName);
+                    row.CreateCell(4).SetCellValue(toinfo.Grade);
                     row.CreateCell(5).SetCellValue(toinfo.UserType == 1 ? "教师" : "学生");
-                    row.CreateCell(6).SetCellValue(toinfo.RealName);
-                    row.CreateCell(7).SetCellValue(toinfo.Sex);
-                    row.CreateCell(8).SetCellValue(toinfo.AddTime.Value.ToString("yyyy-MM-dd HH:mm:ss"));
-                    row.CreateCell(9).SetCellValue(toinfo.Grade);
-                    row.CreateCell(10).SetCellValue(toinfo.Status == 2 ? "拒绝登录" : "正常");
-                    row.CreateCell(11).SetCellValue(toinfo.YUid.ToString());
-
+                    row.CreateCell(6).SetCellValue(toinfo.Sex);
+                    row.CreateCell(7).SetCellValue(toinfo.Resource);
+                    row.CreateCell(8).SetCellValue(toinfo.CreateTime.Value.ToString("yyyy-MM-dd HH:mm:ss"));
+                    row.CreateCell(9).SetCellValue(toinfo.Status == 1 ? "正常" : "拒绝登录");
+                    row.CreateCell(10).SetCellValue(string.IsNullOrEmpty(toinfo.StuPhone) ? "未领取" : "已领取");
+                    row.CreateCell(11).SetCellValue(toinfo.GetClassDate.HasValue ? toinfo.GetClassDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "");
+                    row.CreateCell(12).SetCellValue(toinfo.ListenDate.HasValue ? toinfo.ListenDate.Value.ToString("yyyy-MM-dd") : "");
+                    row.CreateCell(13).SetCellValue(toinfo.SignupDate.HasValue ? toinfo.SignupDate.Value.ToString("yyyy-MM-dd") : "");
+                    row.CreateCell(14).SetCellValue(toinfo.SignupMoney.ToString("0.00"));
+                    row.CreateCell(15).SetCellValue(toinfo.AdviserName);
                 }
             }
         }
@@ -426,7 +446,7 @@ namespace Kingspeak.AdminController
                 IRow row = (IRow)rows.Current;
                 ICell cell = row.GetCell(0);
                 string cellstr = cell.ToString();
-                if (cellstr != "用户名称")
+                if (cellstr != "用户名称" && cellstr != "LucyTest")
                 {
                     ImportUserExcelModel model = GetModelInfo(row, AdviserList, applist);
                     model = InsertIntoDB(model, service);
