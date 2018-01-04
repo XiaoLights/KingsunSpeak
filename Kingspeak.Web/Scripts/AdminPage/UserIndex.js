@@ -153,7 +153,7 @@
                 title: '报名费用'
             }
             , {
-                field: 'AdviserName',
+                field: 'ClassAdviser',
                 title: '课程顾问'
             }
               , {
@@ -231,7 +231,7 @@
         var obj = { UserID: userid, State: state };
         $.post(Common.GetRightUrl("/Admin/User/ChangeState"), obj, function (data) {
             if (data.Success) {
-                layer.msg("操作成功", { time: 1000 });
+                layer.msg("操作成功", { closeBtn: 0,time: 1000 });
                 $('#table').bootstrapTable("refresh");
             } else {
                 layer.alert(data.ErrorMsg);
@@ -243,7 +243,7 @@
     this.SaveUser = function () {
         $.post(Common.GetRightUrl("/Admin/User/SaveUser"), $("#addform").serialize(), function (data) {
             if (data.Success) {
-                layer.alert("保存成功", { time: 1000 });
+                layer.alert("保存成功", { closeBtn: 0, time: 1000 });
                 layer.closeAll('page');
                 $('#table').bootstrapTable("refresh");
             } else {
@@ -260,7 +260,7 @@
         }, function () {
             var arr = $('#table').bootstrapTable('getSelections');
             if (arr.length < 1) {
-                layer.msg("请选择一条记录", { time: 1000 });
+                layer.msg("请选择一条记录", { closeBtn: 0, time: 1000 });
                 return;
             }
             var idarr = '';
@@ -273,7 +273,7 @@
             var obj = { UserIDs: idarr };
             $.post(Common.GetRightUrl('/Admin/User/DeleteUser'), obj, function (data) {
                 if (data.Success) {
-                    layer.alert("删除成功", { time: 1000 });
+                    layer.alert("删除成功", { closeBtn: 0, time: 1000 });
                     $('#table').bootstrapTable("refresh");
                 }
                 else {
@@ -330,7 +330,7 @@
     this.SaveClassInfo = function () {
         $.post(Common.GetRightUrl("/Admin/User/SaveEditClassInfo"), $("#editclassform").serialize(), function (data) {
             if (data.Success) {
-                layer.alert("保存成功", { time: 1000 });
+                layer.alert("保存成功", { closeBtn: 0, time: 1000 });
                 layer.closeAll('page');
                 $('#table').bootstrapTable("refresh");
             } else {
@@ -348,7 +348,7 @@
             var obj = { UserID: userid };
             $.post(Common.GetRightUrl("/Admin/User/GetFreeClass"), obj, function (data) {
                 if (data.Success) {
-                    layer.msg("获取成功", { time: 1000 });
+                    layer.msg("获取成功", { closeBtn: 0, time: 1000 });
                     $('#table').bootstrapTable("refresh");
                 } else {
                     layer.alert(data.ErrorMsg);
@@ -438,12 +438,10 @@ window.operateEvents = {
             $("#txtlistendate").val(Common.FormatTime(row.ListenDate, 'yyyy-MM-dd'));
             $("#txtsigupdate").val(Common.FormatTime(row.SignupDate, 'yyyy-MM-dd'));
             $("#txtsigupmoney").val(row.SignupMoney);
-            if (row.ClassAdviser) {
-                $("#selAdviser").val(row.ClassAdviser);
-            }
+            $("#txtAdviser").val(row.ClassAdviser);
             userIndex.OpenEditClassDialog();
         } else {
-            layer.alert("请先领取课程", { time: 1000 });
+            layer.alert("请先领取课程", { closeBtn: 0, time: 1000 });
         }
     },
     'click .EditUinfo': function (e, value, row, index) {

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 namespace Kingspeak.User.Models
 {
     public class V_UserInfo
-    {
-        /// <summary>
-        ///  
-        /// </summary>
+    {/// <summary>
+     ///  
+     /// </summary>
         public int? UserId { get; set; }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace Kingspeak.User.Models
         /// <summary>
         ///  
         /// </summary>
-        public int? ClassAdviser { get; set; }
+        public string ClassAdviser { get; set; }
 
         /// <summary>
         ///  
@@ -121,18 +120,8 @@ namespace Kingspeak.User.Models
         /// <summary>
         ///  
         /// </summary>
-        public string AdviserName { get; set; }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        public string AdviserWechat { get; set; }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        public string AdviserQrcode { get; set; }
         public int? FreeClassID { get; set; }
+
     }
 
 }

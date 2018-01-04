@@ -36,21 +36,11 @@ namespace Kingspeak.Web.Models
         /// 性别 
         /// </summary>
         public string Sex { get; set; }
-        /// <summary>
-        /// 教师：入职日期 学生：入学时间
-        /// </summary>
-        public string AddTime { get; set; }
-        /// <summary>
-        /// 当 user_type = 1 时 (身份)
-        /// </summary>
-        public string Identity { get; set; }
+      
         /// <summary>
         /// 当 user_type = 2 时(年级)
         /// </summary>
         public string Grade { get; set; }
-        /// <summary>
-        /// 来源
-        /// </summary>
-        public string ChannelCode { get; set; }
+       
     }
 }

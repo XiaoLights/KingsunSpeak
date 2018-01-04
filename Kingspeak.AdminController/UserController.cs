@@ -181,6 +181,9 @@ namespace Kingspeak.AdminController
                     case 4:
                         where.Add(it => it.TelePhone.Contains(SearchKey));
                         break;
+                    case 5:
+                        where.Add(it => it.ClassAdviser.Contains(SearchKey));
+                        break;
                 }
             }
             if (Source.HasValue && Source.Value != 0)
@@ -413,7 +416,7 @@ namespace Kingspeak.AdminController
                     row.CreateCell(12).SetCellValue(toinfo.ListenDate.HasValue ? toinfo.ListenDate.Value.ToString("yyyy-MM-dd") : "");
                     row.CreateCell(13).SetCellValue(toinfo.SignupDate.HasValue ? toinfo.SignupDate.Value.ToString("yyyy-MM-dd") : "");
                     row.CreateCell(14).SetCellValue(toinfo.SignupMoney.ToString("0.00"));
-                    row.CreateCell(15).SetCellValue(toinfo.AdviserName);
+                    row.CreateCell(15).SetCellValue(toinfo.ClassAdviser);
                 }
             }
         }
@@ -486,13 +489,7 @@ namespace Kingspeak.AdminController
                 model.ListenDate = DateTime.Parse(lcell.ToString().Trim());
                 model.SignupDate = DateTime.Parse(sucel.ToString().Trim());
                 model.SignupMoney = decimal.Parse(su2cel.ToString().Trim());
-                string str = cacell.ToString().Trim();
-                Tb_ClassAdviser adv = AdviserList.Where(it => it.AdviserName == str).FirstOrDefault();
-                if (adv == null)
-                {
-                    return new ImportUserExcelModel { Success = true, ErrorMsg = "课程顾问找不到" };
-                }
-                model.ClassAdviser = adv.ID;
+                model.ClassAdviser = cacell.ToString().Trim();
                 return model;
             }
             catch (Exception ex)

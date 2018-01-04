@@ -17,16 +17,16 @@ namespace Kingspeak.User.Service
     {
         public KingResponse SyncUserInfo(Models.Tb_UserInfo userinfo)
         {
-            YZJResponceClass yzjresult = SyncYZJUserInfo(userinfo);
-            if (yzjresult == null)
-            {
-                return KingResponse.GetErrorResponse("同步易助教数据失败");
-            }
-            if (yzjresult.code != "200")
-            {
-                return KingResponse.GetErrorResponse(yzjresult.message);
-            }
-            YZJResponseUserInfo yzjuinfo = JsonHelper.DecodeJson<YZJResponseUserInfo>(yzjresult.data.ToString());
+            //YZJResponceClass yzjresult = SyncYZJUserInfo(userinfo);
+            //if (yzjresult == null)
+            //{
+            //    return KingResponse.GetErrorResponse("同步易助教数据失败");
+            //}
+            //if (yzjresult.code != "200")
+            //{
+            //    return KingResponse.GetErrorResponse(yzjresult.message);
+            //}
+            //YZJResponseUserInfo yzjuinfo = JsonHelper.DecodeJson<YZJResponseUserInfo>(yzjresult.data.ToString());
             UUMSUserService.User uumsuinfo = SyncUUMSUserInfo(userinfo);
             if (uumsuinfo == null)
             {
@@ -48,8 +48,9 @@ namespace Kingspeak.User.Service
                 _userinfo.Password = userinfo.Password;
                 _userinfo.RealName = userinfo.RealName;
                 _userinfo.Sex = userinfo.Sex;
-                _userinfo.Status = Convert.ToInt32(yzjuinfo.status);
-                _userinfo.YUid = Convert.ToInt32(yzjuinfo.uid);
+                _userinfo.Status = 1;
+                //_userinfo.Status = Convert.ToInt32(yzjuinfo.status);
+                //_userinfo.YUid = Convert.ToInt32(yzjuinfo.uid);
                 _userinfo.UserType = userinfo.UserType;
                 if (Insert<Tb_UserInfo>(_userinfo) > 0)
                 {
@@ -67,7 +68,8 @@ namespace Kingspeak.User.Service
                 _userinfo.RealName = userinfo.RealName;
                 _userinfo.Sex = userinfo.Sex;
                 _userinfo.UserIdMod = uumsuinfo.UserID;
-                _userinfo.Status = Convert.ToInt32(yzjuinfo.status);
+                _userinfo.Status = 1;
+                //_userinfo.Status = Convert.ToInt32(yzjuinfo.status);
                 _userinfo.UserType = userinfo.UserType;
                 if (Update<Tb_UserInfo>(_userinfo))
                 {
@@ -272,7 +274,7 @@ namespace Kingspeak.User.Service
             {
                 return KingResponse.GetErrorResponse("该用户未注册");
             }
-            Tb_UserFreeCourse ufcinfo = GetList<Tb_UserFreeCourse>(it => it.StuPhone == stuphone).FirstOrDefault();
+            Tb_UserFreeCourse ufcinfo = GetList<Tb_UserFreeCourse>(it => it.UserID == uinfo.UserId).FirstOrDefault();
             if (ufcinfo != null)
             {
                 return KingResponse.GetErrorResponse("该用户已领取过课程了，请勿重复操作", 001);
@@ -320,7 +322,7 @@ namespace Kingspeak.User.Service
                     if (Insert<Tb_UserInfo>(uinfo) > 0)
                     {
                         uinfo = GetList<Tb_UserInfo>(it => it.UserName == model.UserName).FirstOrDefault();
-                        SyncYZJUserInfo(uinfo);
+                       // SyncYZJUserInfo(uinfo);
                         SyncUUMSUserInfo(uinfo);
                     }
                     else
@@ -384,7 +386,11 @@ namespace Kingspeak.User.Service
             V_UserInfo uinfo = GetList<V_UserInfo>(it => it.UserName == username && it.Status == 1 && it.UserType == 2).FirstOrDefault();
             if (uinfo == null)
             {
-                return KingResponse.GetErrorResponse("找不到用户信息");
+                uinfo = GetList<V_UserInfo>(it => it.TelePhone == username && it.Status == 1 && it.UserType == 2).FirstOrDefault();
+                if (uinfo == null)
+                {
+                    return KingResponse.GetErrorResponse("找不到用户信息");
+                }
             }
             return KingResponse.GetResponse(new
             {
@@ -394,7 +400,7 @@ namespace Kingspeak.User.Service
                 ListenDate = uinfo.ListenDate,
                 SignupDate = uinfo.SignupDate,
                 SignupMoney = uinfo.SignupMoney,
-                AdviserName = uinfo.AdviserName
+                AdviserName = uinfo.ClassAdviser
             });
         }
     }

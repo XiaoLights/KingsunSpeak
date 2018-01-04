@@ -21,7 +21,7 @@ Common.QueryString.Initial();
 
 Common.GetRightUrl = function (url) {
     var cont = "";
-    cont = "/Kingspeak";
+   // cont = "/Kingspeak";
     return cont + url;
 }
 

@@ -27,6 +27,6 @@ namespace Kingspeak.User.Models
         /// <summary>
         /// 课程顾问
         /// </summary>
-        public int? ClassAdviser { get; set; }
+        public string ClassAdviser { get; set; }
     }
 }

@@ -213,7 +213,7 @@ namespace Kingspeak.Web.Controllers
                 {
                     return Json(KingResponse.GetErrorResponse("还未领取免费课程，请先领取免费课程再去上课", 001));
                 }
-                if (!classinfo.ClassAdviser.HasValue)
+                if (string.IsNullOrEmpty(classinfo.ClassAdviser))
                 {
                     return Json(KingResponse.GetErrorResponse("找不到课程顾问，请扫描二维码联系课程顾问", 002));
                 }

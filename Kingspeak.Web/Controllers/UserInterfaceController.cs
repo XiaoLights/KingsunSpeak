@@ -41,9 +41,7 @@ namespace Kingspeak.Web.Controllers
 
             uinfo.UserName = user.UserName;
             uinfo.TelePhone = user.Phone;
-            uinfo.AddTime = Convert.ToDateTime(user.AddTime);
             uinfo.Grade = user.Grade;
-            uinfo.Identity = user.Identity;
             uinfo.Password = user.Password;
             uinfo.RealName = user.RealName;
             uinfo.Resource = atinfo.AppName;
