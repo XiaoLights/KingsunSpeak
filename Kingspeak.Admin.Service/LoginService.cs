@@ -17,7 +17,7 @@ namespace Kingspeak.Admin.Service
             Tb_Admin_UserInfo userinfo = Get<Tb_Admin_UserInfo>(it => it.UserName == userName && it.PassWord == passWord);
             if (userinfo != null)
             {
-                Task.Run(() => UpdateLastLoginDate(userinfo.UserID));
+                Task.Run(() => UpdateLastLoginDate(userinfo.UserID.Value));
                 return KingResponse.GetResponse(userinfo);
             }
             else

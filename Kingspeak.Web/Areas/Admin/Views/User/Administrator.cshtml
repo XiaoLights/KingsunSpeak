@@ -47,6 +47,53 @@
         </div>
     </div>
     <table id="table" class="table-striped table-hover table-condensed"></table>
+
+    <div id="addAdmin" style="display:none;">
+        <form id="addform" style="margin-top:15px;">
+            <input type="hidden" name="ID" id="hidID" value="" />
+            <div class="form-group" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    管理员名称
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtuserName" name="UserName" class="form-control" placeholder="管理员名称" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    真实姓名
+                </label>
+                <div class="col-sm-10" style="overflow:hidden;">
+                    <input type="text" id="txttrueName" name="TrueName" class="form-control" placeholder="管理员真实姓名" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    密码
+                </label>
+                <div class="col-sm-10">
+                    <input type="password" id="txtpassword" name="PassWord" class="form-control" placeholder="管理员密码" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    确认密码
+                </label>
+                <div class="col-sm-10">
+                    <input type="password" id="txtverifypwd" name="VerifyPwd" class="form-control" placeholder="确认密码" value="" />
+                </div>
+            </div>
+            @*<div class="form-group date" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    头像选择
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control pull-right" name="ExpirDate" id="datepicker">
+                </div>
+            </div>*@
+        </form>
+    </div>
+
 </section>
 <!-- /.content -->
 

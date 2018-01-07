@@ -27,6 +27,40 @@ namespace Kingsun.Framework.Manager
         }
 
         /// <summary>
+        /// 删除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">主键编号</param>
+        /// <returns></returns>
+        public bool Delete<T>(object id) where T : class, new()
+        {
+            using (var db = repository.GetInstance())
+            {
+                int i = db.Deleteable<T>(id).ExecuteCommand();
+                OperateError = repository._operatorError;
+                return i > 0;
+            }
+        }
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ids">主键编号数组</param>
+        /// <returns></returns>
+        public bool Delete<T>(object[] ids) where T : class, new()
+        {
+            using (var db = repository.GetInstance())
+            {
+                int i = db.Deleteable<T>(ids).ExecuteCommand();
+                OperateError = repository._operatorError;
+                return i > 0;
+            }
+        }
+
+
+
+        /// <summary>
         /// 获取实体对象
         /// </summary>
         /// <typeparam name="T"></typeparam>

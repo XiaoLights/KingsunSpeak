@@ -5,12 +5,12 @@
 	background: url(../images/bagg.png) no-repeat top center;
 }
 .head_nr .down{
-	width: 493px;
+	/*width: 493px;*/
 	text-align: left;
-	margin:-10px 35px 50px 0;
+	margin:-135px 5px 50px 0;
 }
 .head_nr .down h2{
-	font:700 60px/100px "微软雅黑";
+	font:500 60px/100px "微软雅黑";
 	color: #fff;
 	letter-spacing:8px;
 }
@@ -20,7 +20,7 @@
 	letter-spacing:3px;
 }
 .head_nr .down .a1{
-	margin-top:90px;
+	margin-top:40px;
 }
 .head_nr .down a{
 	width: 180px;
@@ -145,7 +145,7 @@
 	text-decoration: underline;
 	position: absolute;
 	bottom: 0;
-	left: 100px;
+	left: 50px;
 }
 .videos .videos_nr{
 	float: right;
@@ -293,9 +293,28 @@
 	background-color: #fff;
 }
 .footer .code img{
-	float: left;
-	margin-right: 20px;
+	/*float: left;*/
+	/*margin-right: 20px;*/
 }
+.footer .code .divc{
+	float:left;
+    margin-right:40px;   
+    height:220px; 
+    width:220px;
+    text-align:center;
+}
+.footer .code .divc h2{
+    margin:20px 0 10px;
+	font-size:20px;
+    /*color:#000;*/
+}
+.footer .code .divc label{
+     display:block;
+	 width:100%;
+     line-height:24px;
+     text-align:center;
+}
+ 
 .footer .code p{
 	font:500 18px/30px "微软雅黑";
 	color: #72767F;
@@ -313,6 +332,7 @@
 .footer .footer_nr p{
 	font:300 16px/30px "微软雅黑";
 	color: #346130;
+    text-align:center;
 }
 
 /*弹窗样式*/
@@ -324,3 +344,30 @@
 .box .close{ background:url(../images/close.png) no-repeat; width:40px; height:40px; display:block; position:absolute; left:50%; bottom:-70px; margin-left:-20px; cursor:pointer;}
 .shadow{position: fixed;opacity: 0.5;filter: alpha(opacity=50);bottom: 0;left: 0;
 right: 0;top: 0;background: black;z-index: 10000; display:none;}
+
+
+
+/*弹窗样式*/
+.layui-layer-content{text-align:center;}
+.layui-layer-content p{ color:#E45273; font-size:18px; line-height:40px; font-weight:700;}
+.layui-layer-content .p1{ margin-top:80px;}
+.layui-layer-content .p2{ margin-top:30px;}
+.layui-layer-content .img1{ position:absolute; top:40px; left:60px;}
+.layui-layer-content .img2{margin-top:40px;}
+.layui-layer-content .sour{ width:140px; height:50px; line-height:50px; text-align:center; color:#fff; font-size:18px; background-color:#48B73E; margin:30px auto 0; display:block; border-radius:5px; cursor:pointer;}
+
+.layui-layer-setwin .layui-layer-close2 {
+    position: absolute;
+    right: 173px !important;
+    top: 400px !important;
+    width: 30px;
+    height: 30px;
+    margin-left: 0;
+    background-position: -149px -31px;
+    _display: none;
+}
+.layui-layer-ico {
+    background: url(../images/close.png) no-repeat !important;
+     width:40px !important;
+      height:40px !important;
+}

@@ -1,0 +1,208 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <title>金太阳英语外教</title>
+    <link href="@Url.Content("~/Content/css/base.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script src="~/Scripts/Plugins/layer/layer/layer.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Page/index.js")"></script>
+
+</head>
+<body>
+    <!-- 头部 -->
+    <div class="header">
+        <div class="w">
+            <div class="head_nr clearfix">
+                <div class="down fr" style="position:relative; top:0; right:-90px;">
+                    <img src="~/Content/images/LOGO.png" />
+                    <h2>金太阳英语在线教育</h2>
+                    <h3>定制专属外教口语课</h3>
+                    <h3>轻松有趣学英语</h3>
+                    <div id="btnmask" style="position: absolute;height: 160px;width: 200px;z-index: 9999;top: 280px;left: -5px; display:none;"></div>
+                    <a class="a1" href="javascript:void(0)" id="gotoclass">马上去上课</a>
+                    <a class="order" href="javascript:void(0)" id="getclass">领取体验课</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 头部结束 -->
+    <!-- 内容部分开始 -->
+    <div class="content">
+        <div class="func">
+            <div class="w clearfix func_nr">
+                <ul>
+                    <li class="li4">
+                        <img width="90px" height="90px" src="@Url.Content("~/Content/images/pic1.png")" alt="">
+                        <h2>在线外教互动</h2>
+                        <p>拥有国际教学认证的外教在线1v1和1v4互动小组课。</p>
+                    </li>
+                    <li class="li5">
+                        <img width="90px" height="90px" src="@Url.Content("~/Content/images/pic2.png")" alt="">
+                        <h2>主辅修课相结合</h2>
+                        <p>引进国际前沿教材，学习知识的同时还注重培养孩子的价值观和动手能力。</p>
+                    </li>
+                    <li class="li6">
+                        <img width="90px" height="90px" src="@Url.Content("~/Content/images/pic3.png")" alt="">
+                        <h2>双重测评定位</h2>
+                        <p>测试卷+外教测评课，双重测评精准定位孩子的水平，量身定制学习方案。</p>
+                    </li>
+                    <li class="li7">
+                        <img width="90px" height="90px" src="@Url.Content("~/Content/images/pic4.png")" alt="">
+                        <h2>科学学习闭环</h2>
+                        <p>循环复现，学练测并行，为孩子提供科学的学习闭环，进步看得见。</p>
+                    </li>
+                </ul>
+                <div class="kuai"></div>
+            </div>
+        </div>
+        <div class="videos">
+            <div class="w clearfix videos1">
+                <div class="waijiao">
+                    <h2>01</h2>
+                    <h3>我们的外教</h3>
+                    <p class="p1">
+                        100%来自欧美国家，严格甄选入住资质层层考核，拥有丰富的教学经验
+                    </p>
+                    <p class="p2">	中美名师任你选，让孩子在家享受优质的英文教学，像Kitty一样自由交谈。</p>
+                    <img src="~/Content/images/LOGO1.png" style="margin:40px 0;"/>
+                    <a href="#" onclick="javascript: $('#gotoclass').click();">参与体验</a>
+                </div>
+                <div class="videos_nr">
+
+                    <video id="video1" controls poster="@Url.Content("~/Content/images/video2.png")" src="@Url.Content("~/Content/video/video2.mp4")" webkit-playsinline webkit-playsinline>
+                        <source src="@Url.Content("~/Content/video/video2.mp4")">示例视频1</source>
+                        您的浏览器不支持video标签
+                    </video>
+                    <ul>
+                        <li>课堂实录</li>
+                        <li class="on">我们的外教</li>
+                    </ul>
+                </div>
+                <div class="kuai"></div>
+            </div>
+        </div>
+        <div class="module">
+            <div class="w clearfix module1">
+                <h2>02</h2>
+                <h3>简单3步，开启英语学习精彩旅程</h3>
+                <div class="module_nr">
+                    <h4>用户登录</h4>
+                    <p>还不是金太阳用户？</p>
+                    <p>马上注册吧？</p>
+                    <img src="@Url.Content("~/Content/images/load.png")" alt="">
+                </div>
+                <img class="img1" src="@Url.Content("~/Content/images/next.png")" alt="">
+                <div class="module_nr">
+                    <h4>顾问预约</h4>
+                    <p>选定时间</p>
+                    <p>选定外教</p>
+                    <p>推荐教材</p>
+                    <img src="@Url.Content("~/Content/images/counselor.png")" alt="">
+                </div>
+                <img class="img1" src="@Url.Content("~/Content/images/next.png")" alt="">
+                <div class="module_nr">
+                    <h4>进入教室</h4>
+                    <p>电脑、pad连网</p>
+                    <p>随时随地都能上课</p>
+                    <img src="@Url.Content("~/Content/images/mac.png")" alt="">
+                </div>
+                <div class="kuai"></div>
+            </div>
+        </div>
+        <div class="aspirations">
+            <div class="w clearfix aspirations1">
+                <h2>03</h2>
+                <h3>学员心声</h3>
+                <div class="aspirations_nr">
+                    <img src="@Url.Content("~/Content/images/peo4.png")" alt="">
+                    <div class="jieshao">
+                        <h4>Apple</h4>
+                        <p>
+                            Kingdun VIP的外教课太有趣了，虽然外教在美国，但我们视频交流一点障碍也没有。她还会讲很多美国的生活。我们现在还是很好的朋友，就这样，不知不觉我的英语口语也提高了！
+                        </p>
+                    </div>
+                </div>
+
+                <div class="aspirations_nr">
+                    <img src="@Url.Content("~/Content/images/peo5.png")" alt="">
+                    <div class="jieshao">
+                        <h4>Elsa</h4>
+                        <p>以前我有些不善于当众表现自己，在金太阳老师的帮助和鼓励下，我努力突破自己的弱点。后来还参加了多次演讲比赛，我变得越来越勇敢自信了！</p>
+                    </div>
+                </div>
+
+                <div class="aspirations_nr">
+                    <img src="@Url.Content("~/Content/images/peo6.png")" alt="">
+                    <div class="jieshao">
+                        <h4>Wilson</h4>
+                        <p>我在Kingsun VIP上课已经有1年多了，老师不但替我纠正发音、教我英语知识，还给我讲很多美国的本地文化。大家都说5岁的我，英语真是太棒了呢！</p>
+                    </div>
+                </div>
+                <div class="kuai"></div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- 内容部分结束 -->
+    <!-- 页面底部开始 -->
+    <div class="footer">
+        <div class="w code clearfix">
+            <div style="  overflow:hidden;  ">
+                <div class="divc">
+                    <img src="@Url.Content("~/Content/images/code.png")" style=" width:170px; height:170px;" alt="">
+                    <p>官方微信</p>
+                </div>
+                <div class="divc">
+                    <img src="@Url.Content("~/Content/images/kcgw.jpg")" style=" width:170px; height:170px;" alt="">
+                    <p>课程顾问</p>
+                </div>
+                @*<img src="@Url.Content("~/Content/images/code.png")" alt="">
+            <img src="@Url.Content("~/Content/images/code.png")" alt="">*@
+                <div class="divc" style="text-align:left;">
+                    <h2>客服热线</h2>
+                    <p>0755-66892256</p>
+                    <p>0755-86336023</p>
+                </div>
+                <div class="divc" style="margin-right:0;text-align:left;">
+                    <h2>客服QQ</h2>
+                    <p>1370541973</p>                   
+                </div>
+            </div>
+        </div>
+        <div class="footer_nr">
+            <div class="w">
+               @* <p>联系电话：0755-66892256  0755-86336023</p>*@
+                <p>Copyright © 2011-2012 <a href="http://www.kingsunsoft.com/" style="color:inherit" target="_blank">深圳市方直科技股份有限公司</a> 版权所有 粤教信息[2010]3号 ICP证粤B2-20110094</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="box">
+        <p class="p1">恭喜您领取成功!</p>
+        <p>我们的课程顾问将会</p>
+        <p>第一时间联系您!</p>
+        <img src="@Url.Content("~/Content/images/star.png")" alt="" />
+        <a class="sour">确认</a>
+        <a class="close"></a>
+    </div>
+    <div class="shadow"></div>
+
+    <!-- 页面底部结束 -->
+    <div style="display: none">
+        <script src="https://s19.cnzz.com/z_stat.php?id=1263421333&web_id=1263421333" language="JavaScript"></script>
+    </div>
+    <input type="hidden" id="loginResult" value="@ViewBag.Result" />
+</body>
+</html>

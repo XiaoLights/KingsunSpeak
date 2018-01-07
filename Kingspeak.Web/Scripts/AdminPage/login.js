@@ -15,13 +15,13 @@ var Login = function () {
             $("#spanerror").hide().text('');
             var obj = $('#loginform').serialize();
             //obj += '&rememberMe=' + false;
-            $.post("/Admin/Login/Login", obj, function (data) {
+            $.post(Common.GetRightUrl("/Admin/Login/Login"), obj, function (data) {
                 if (data.Success) {
                     var returl = $("#btnsubmit").attr("returl");
                     if (returl) {
                         window.location.href = returl;
                     } else {
-                        window.location.href = "/Admin/Home/Index";
+                        window.location.href = Common.GetRightUrl("/Admin/Home/Index");
                     }
                 }
                 else {

@@ -28,11 +28,12 @@ namespace Kingspeak.Web.Controllers
             UserService service = new UserService();
             KingResponse kresponse = new KingResponse();
             Tb_UserInfo uinfo = new Kingspeak.User.Models.Tb_UserInfo();
-            Tb_AppToken atinfo = service.CheckAppToken(user.Token);
-            if (atinfo == null)
+            KingResponse res = service.CheckAppToken(user.Token);
+            if (!res.Success)
             {
-                return KingResponse.GetErrorResponse("Token秘钥错误");
+                return res;
             }
+            Tb_AppToken atinfo = (Tb_AppToken)res.Data;
             if (user.UserName != user.Phone)
             {
                 user.UserName = user.Phone;
@@ -40,9 +41,7 @@ namespace Kingspeak.Web.Controllers
 
             uinfo.UserName = user.UserName;
             uinfo.TelePhone = user.Phone;
-            uinfo.AddTime = Convert.ToDateTime(user.AddTime);
             uinfo.Grade = user.Grade;
-            uinfo.Identity = user.Identity;
             uinfo.Password = user.Password;
             uinfo.RealName = user.RealName;
             uinfo.Resource = atinfo.AppName;
@@ -61,12 +60,12 @@ namespace Kingspeak.Web.Controllers
         public KingResponse GetFreeCourse([FromBody]StuGetFreeClass stu)
         {
             UserService service = new UserService();
-            Tb_AppToken atinfo = service.CheckAppToken(stu.Token);
-            if (atinfo == null)
+            KingResponse res = service.CheckAppToken(stu.Token);
+            if (!res.Success)
             {
-                return KingResponse.GetErrorResponse("Token秘钥错误");
+                return res;
             }
-            KingResponse kres = service.GetFreeClass(stu.StuPhone);
+            KingResponse kres = service.GetFreeClass(stu.StuUserName);
             return kres;
         }
 
@@ -79,10 +78,10 @@ namespace Kingspeak.Web.Controllers
         public KingResponse GetStuList([FromBody]GetStuList stu)
         {
             UserService service = new UserService();
-            Tb_AppToken atinfo = service.CheckAppToken(stu.Token);
-            if (atinfo == null)
+            KingResponse res = service.CheckAppToken(stu.Token);
+            if (!res.Success)
             {
-                return KingResponse.GetErrorResponse("Token秘钥错误");
+                return res;
             }
             string url = "http://yzj.kingsun.cn/api/user.php?action=queryStudentListByChannelCode&token=KINGSUN_v7k6WBLPjJQfxUM6";
             var content = new FormUrlEncodedContent(new Dictionary<string, string>() {
@@ -98,7 +97,8 @@ namespace Kingspeak.Web.Controllers
             {
                 return KingResponse.GetResponse(result.data);
             }
-            else {
+            else
+            {
                 return KingResponse.GetErrorResponse(result.message, int.Parse(result.code));
             }
 
@@ -113,22 +113,40 @@ namespace Kingspeak.Web.Controllers
         public KingResponse GetUserLoginToken([FromBody]GetUserToken utoken)
         {
             UserService service = new UserService();
-            Tb_AppToken atinfo = service.CheckAppToken(utoken.Token);
-            if (atinfo == null)
+            KingResponse res = service.CheckAppToken(utoken.Token);
+            if (!res.Success)
             {
-                return KingResponse.GetErrorResponse("Token秘钥错误");
+                return res;
             }
+            Tb_AppToken atinfo = (Tb_AppToken)res.Data;
             YZJResponceClass result = service.GetLoginToken(utoken.UserName);
             if (result.code == "200")
             {
                 return KingResponse.GetResponse(result.data);
             }
-            else {
+            else
+            {
                 return KingResponse.GetErrorResponse(result.message, int.Parse(result.code));
             }
         }
 
-
+        /// <summary>
+        /// 获取学生的信息
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public KingResponse GetStuInfo([FromBody]StuGetFreeClass stu)
+        {
+            UserService service = new UserService();
+            KingResponse res = service.CheckAppToken(stu.Token);
+            if (!res.Success)
+            {
+                return res;
+            }
+            KingResponse kres = service.GetStuInfo(stu.StuUserName);
+            return kres;
+        }
 
         /// <summary>
         /// 测试

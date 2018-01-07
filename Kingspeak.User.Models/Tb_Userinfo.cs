@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace Kingspeak.User.Models
         /// <summary>
         /// 编号
         /// </summary>
-        public int UserId { get; set; }
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public int? UserId { get; set; }
 
         /// <summary>
         /// 名称
@@ -36,6 +38,7 @@ namespace Kingspeak.User.Models
         /// <summary>
         /// 创建时间
         /// </summary>
+        [SugarColumn(IsOnlyIgnoreInsert = true)]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>

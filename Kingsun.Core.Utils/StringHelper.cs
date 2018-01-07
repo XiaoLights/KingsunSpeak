@@ -698,6 +698,14 @@ namespace Kingsun.Core.Utils
 
         #endregion
 
+        #region 获取唯一用户编号
+        public static int GetUserID()
+        {
+            string guid = Guid.NewGuid().ToString();
+            return Math.Abs(guid.GetHashCode());
+        }
+        #endregion
+
         public static int ToInt(this string i)
         {
             int id;

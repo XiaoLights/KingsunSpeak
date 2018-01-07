@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="~/Content/AdminLTE/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/AdminLTE/dist/css/AdminLTE.min.css">
+    <!--Switch控件-->
+    <link href="~/Scripts/Plugins/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
 
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -78,7 +80,7 @@
                                     <a href="javascript:;" class="btn btn-default btn-flat">个人配置</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="/Admin/Login/Index" class="btn btn-default btn-flat">注销</a>
+                                    <a href="~/Admin/Login/Index" class="btn btn-default btn-flat">注销</a>
                                 </div>
                             </li>
                         </ul>
@@ -106,10 +108,10 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">我的菜单</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="/Admin/Home/Index"><i class="fa fa-home"></i> <span>首页</span></a></li>
-                <li><a href="/Admin/User/Index"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
-                <li><a href="/Admin/Application/Index"><i class="fa fa-archive"></i> <span>接入应用管理</span></a></li>
-                <li><a href="/Admin/User/Administrator"><i class="fa fa-user"></i> <span>管理员管理</span></a></li>
+                <li><a href="~/Admin/Home/Index"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                <li><a href="~/Admin/User/Index"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
+                <li><a href="~/Admin/Application/Index"><i class="fa fa-archive"></i> <span>接入应用管理</span></a></li>
+                <li><a href="~/Admin/User/Administrator"><i class="fa fa-user"></i> <span>管理员管理</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -144,6 +146,11 @@
     <script src="~/Content/AdminLTE/dist/js/adminlte.min.js"></script>
     <!-- layer.js -->
     <script src="~/Scripts/Plugins/layer/layer/layer.js"></script>
+    <!--Switch控件-->
+    <script src="~/Scripts/Plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+
     <script src="~/Scripts/Common.js"></script>
     @RenderSection("scripts", required: false)
 

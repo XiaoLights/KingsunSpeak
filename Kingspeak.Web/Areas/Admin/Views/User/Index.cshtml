@@ -5,8 +5,12 @@
 }
 
 @section Style{
+    <link href="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 
+    <link href="~/Scripts/Plugins/webuploader/css/webuploader.css" rel="stylesheet" />
+<link href="~/Scripts/Plugins/webuploader/css/MyWebuploader.css" rel="stylesheet" />
 }
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -23,6 +27,9 @@
                     <select id="searchType" style="width:auto;" class="form-control">
                         <option value="1">用户名</option>
                         <option value="2">真实姓名</option>
+                        <option value="3">用户编号</option>
+                        <option value="4">手机号</option>
+                        <option value="5">课程顾问</option>
                     </select>
                 </div>
                 <input type="text" class="form-control" placeholder="请输入查询关键字" id="searchkey" />
@@ -49,19 +56,172 @@
             </select>
         </div>
         <div class="btn-group">
+            <button id="btn_adduser" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>添加用户
+            </button>
+        </div>
+        <div class="btn-group" style="display:none;">
+            <button id="btn_deluser" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+        </div>
+        <div class="btn-group">
             <button id="btn_export" type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
             </button>
+            <button id="btn_import" class="btn btn-primary" style=" padding-bottom: 1px;">
+               <span class="glyphicon glyphicon-import" aria-hidden="true"></span>导入
+            </button>
+            <button id="btn_import_model" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>下载导入模板
+            </button>
         </div>
-       
+
+
     </div>
 
     <table id="table" class="table-striped table-hover table-condensed"></table>
+
+    <div id="addUser" style="display:none;">
+        <form id="addform" style="margin-top:15px;">
+            <div class="form-group" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    用户名
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtuserName" name="UserName" class="form-control required" placeholder="用户名" value="" />
+                    <input type="hidden" name="UserId" id="hidUserId" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    真实姓名
+                </label>
+                <div class="col-sm-10" style="overflow:hidden;">
+                    <input type="text" id="txttrueName" name="RealName" class="form-control" placeholder="真实姓名" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    联系方式
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txttele" name="TelePhone" class="form-control" placeholder="联系方式" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    年级
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="Grade" id="selgrade">
+                        <option value="一年级">一年级</option>
+                        <option value="二年级">二年级</option>
+                        <option value="三年级">三年级</option>
+                        <option value="四年级">四年级</option>
+                        <option value="五年级">五年级</option>
+                        <option value="六年级">六年级</option>
+                        <option value="七年级">七年级</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    来源
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="ResourceID" id="selres">
+                        @{
+                            if (ViewBag.AppList != null)
+                            {
+                                foreach (var a in ViewBag.AppList)
+                                {
+                        <option value="@a.ID">@a.AppName</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    性别
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="Sex" id="selsex">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+
+                    </select>
+                </div>
+            </div>
+            @*<div class="form-group date" style="overflow:hidden;">
+                    <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                        头像选择
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control pull-right" name="ExpirDate" id="datepicker">
+                    </div>
+                </div>*@
+        </form>
+    </div>
+
+    <div id="editClass" style="display:none;">
+        <form id="editclassform" style="margin-top:15px;">
+            <div class="form-group" style="overflow:hidden;">
+                <label for="txtappName" class="col-sm-2 control-label txtlabel">
+                    用户名
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtun" name="UserName" class="form-control" readonly="readonly" placeholder="用户名" value="" />
+                    <input type="hidden" id="hidfcid" name="ID" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    试听时间
+                </label>
+                <div class="col-sm-10" style="overflow:hidden;">
+                    <input type="text" id="txtlistendate" name="ListenDate" class="form-control datepicker" placeholder="试听时间" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    报名时间
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtsigupdate" name="SignupDate" class="form-control datepicker" placeholder="报名时间" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    报名费用
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtsigupmoney" name="SignupMoney" class="form-control" placeholder="报名费用" value="" />
+                </div>
+            </div>
+            <div class="form-group" style="overflow:hidden;">
+                <label class="col-sm-2 control-label txtlabel">
+                    课程顾问
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtAdviser" name="ClassAdviser" class="form-control" placeholder="报名费用" value="" />
+                   
+                </div>
+            </div>
+        </form>
+    </div>
+
+
 </section>
 <!-- /.content -->
 
 @section scripts{
-
+    <!--日期选择-->
+    <script src="~/Content/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!--上传控件-->
+    <script src="~/Scripts/Plugins/webuploader/dist/webuploader.js"></script>
     <link href="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
     <script src="~/Content/AdminLTE/bower_components/bootstrap-table/bootstrap-table.js"></script>
     <script src="~/Scripts/AdminPage/UserIndex.js"></script>
