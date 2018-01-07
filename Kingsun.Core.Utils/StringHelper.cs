@@ -674,7 +674,7 @@ namespace Kingsun.Core.Utils
             Byte[] data = Encrypt(encoder.GetBytes(Target), encoder.GetBytes("1234567890abcdef"));
             return System.Convert.ToBase64String(data);
         }
-        public static string Encrypt(string Target,string key)
+        public static string Encrypt(string Target, string key)
         {
             System.Text.Encoding encoder = System.Text.Encoding.UTF8;
             Byte[] data = Encrypt(encoder.GetBytes(Target), encoder.GetBytes(key));
@@ -697,5 +697,12 @@ namespace Kingsun.Core.Utils
         }
 
         #endregion
+
+        public static int ToInt(this string i)
+        {
+            int id;
+            int.TryParse(i, out id);//这里当转换失败时返回的id为0
+            return id;
+        }
     }
 }
